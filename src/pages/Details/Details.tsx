@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { Btn } from '../../UI/Btn/Btn';
 import poster from '../../assets/img/poster1.png';
 import './styles.scss';
@@ -21,7 +22,9 @@ export const Details: FC = () => {
           Martial-arts master Shang-Chi confronts the past he thought he left
           behind when he's drawn into Read More
         </p>
-        <Btn type="primary" text="Book Ticket" />
+        <Link to={`/booking/${1}`}>
+          <Btn type="primary" text="Book Ticket" />
+        </Link>
       </div>
     </section>
   );

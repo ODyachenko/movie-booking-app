@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { ImoviesList } from '../../../@types';
 import { MoviesListItem } from './MoviesListItem';
+import 'swiper/css';
 
 type MoviesListProps = {
   movies: ImoviesList[];
@@ -8,10 +10,17 @@ type MoviesListProps = {
 
 export const MoviesList: FC<MoviesListProps> = ({ movies }) => {
   return (
-    <ul className="movies__list">
+    <Swiper
+      className="movies__list"
+      spaceBetween={30}
+      slidesPerView={'auto'}
+      onSwiper={(swiper: any) => console.log(swiper)}
+    >
       {movies.map((movie) => (
-        <MoviesListItem key={movie.id} {...movie} />
+        <SwiperSlide key={movie.id}>
+          <MoviesListItem {...movie} />
+        </SwiperSlide>
       ))}
-    </ul>
+    </Swiper>
   );
 };

@@ -8,7 +8,7 @@ export const Main: FC = () => {
   return (
     <main className="main">
       <div className="container">
-        <h1 className="main__title title">Explore Movie</h1>
+        {/* <h1 className="main__title title">Explore Movie</h1> */}
         <Tabs />
         <TopMovies />
         <RecommendedMovies />

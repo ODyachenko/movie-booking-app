@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+
 import { ImoviesList } from '../../../@types';
 import { MoviesList } from './MoviesList';
 import './styles.scss';

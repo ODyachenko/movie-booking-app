@@ -2,16 +2,22 @@
   &__title {
     margin-bottom: 15px;
   }
+  // &__list {
+  //   display: flex;
+  //   gap: 30px;
+  // }
   &__list {
-    display: flex;
-    gap: 30px;
+    // margin-bottom: 30px;
+    &:first-of-type {
+      margin-bottom: 30px;
+    }
   }
 }
 
 .movie {
-  &:not(:last-child) {
-    margin-bottom: 30px;
-  }
+  // &:not(:last-child) {
+  //   margin-bottom: 30px;
+  // }
 
   &__poster {
     margin-bottom: 10px;
@@ -21,4 +27,8 @@
     color: #fff;
     margin-bottom: 5px;
   }
+}
+
+.swiper-slide {
+  max-width: 190px;
 }

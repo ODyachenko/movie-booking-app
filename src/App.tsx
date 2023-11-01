@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Nav } from './components/Nav/Nav';
+import { Booking } from './pages/Booking';
 import { Details } from './pages/Details/Details';
 import { Home } from './pages/Home';
 import { NotFound } from './pages/NotFound';
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/details/:id" element={<Details />} />
+          <Route path="/booking/:id" element={<Booking />} />
           <Route path="/your-movie" element={<YourMovie />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/not-found" element={<NotFound />} />
