@@ -10,9 +10,9 @@ type MoviesProps = {
 
 export const Movies: FC<MoviesProps> = ({ title, movies }) => {
   return (
-    <div className="movies">
+    <section className="movies">
       <h2 className="movies__title title">{title}</h2>
       <MoviesList movies={movies} />
-    </div>
+    </section>
   );
 };

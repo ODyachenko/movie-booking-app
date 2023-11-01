@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Nav } from './components/Nav/Nav';
-import { Details } from './pages/Details';
+import { Details } from './pages/Details/Details';
 import { Home } from './pages/Home';
 import { NotFound } from './pages/NotFound';
 import { Settings } from './pages/Settings';
