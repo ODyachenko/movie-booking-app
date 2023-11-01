@@ -1,7 +1,22 @@
-import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Details } from './pages/Details';
+import { Home } from './pages/Home';
+import { NotFound } from './pages/NotFound';
+import { Settings } from './pages/Settings';
+import { YourMovie } from './pages/YourMovie';
 
 function App() {
-  return <div>test</div>;
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/details/:id" element={<Details />} />
+        <Route path="/your-movie" element={<YourMovie />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/not-found" element={<NotFound />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

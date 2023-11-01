@@ -1,0 +1,16 @@
+@import '../../assets/scss/variables.scss';
+
+.field {
+  &__caption {
+    display: block;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  &__item {
+    border-radius: 10px;
+    border: 1px solid rgba(178, 181, 187, 0.5);
+    cursor: pointer;
+
+    padding: 15px 25px;
+  }
+}

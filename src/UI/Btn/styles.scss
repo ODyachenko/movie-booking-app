@@ -1,0 +1,25 @@
+@import '../../assets/scss/variables.scss';
+
+.btn {
+  display: block;
+  width: 100%;
+  font-size: 18px;
+  text-align: center;
+  color: #fff;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  padding: 15px 20px;
+
+  &.primary {
+    background: $primaryBlue;
+
+    &:hover {
+      background: #227ec1;
+    }
+  }
+  &.secondary {
+    background: $primaryBg;
+  }
+}
