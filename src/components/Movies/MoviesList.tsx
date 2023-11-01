@@ -10,12 +10,7 @@ type MoviesListProps = {
 
 export const MoviesList: FC<MoviesListProps> = ({ movies }) => {
   return (
-    <Swiper
-      className="movies__list"
-      spaceBetween={30}
-      slidesPerView={'auto'}
-      onSwiper={(swiper: any) => console.log(swiper)}
-    >
+    <Swiper className="movies__list" spaceBetween={30} slidesPerView={'auto'}>
       {movies.map((movie) => (
         <SwiperSlide key={movie.id}>
           <MoviesListItem {...movie} />

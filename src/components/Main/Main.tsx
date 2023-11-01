@@ -6,7 +6,7 @@ import './styles.scss';
 
 export const Main: FC = () => {
   return (
-    <main className="main">
+    <main className="main block">
       <div className="container">
         {/* <h1 className="main__title title">Explore Movie</h1> */}
         <Tabs />

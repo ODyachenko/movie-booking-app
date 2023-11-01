@@ -2,11 +2,16 @@
 @import './assets/scss/variables.scss';
 
 body {
+  position: relative;
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
   line-height: 1.2;
   color: $secondaryText;
   background: $primaryBg;
+}
+
+.block {
+  padding: 25px 0;
 }
 
 .container {

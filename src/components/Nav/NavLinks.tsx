@@ -62,9 +62,9 @@ const navLinks: NavLinksType[] = [
   },
 ];
 
-export const NavLinks: FC = () => {
+export const NavLinks: FC<any> = ({ onClickHandler }) => {
   return (
-    <ul className="nav__links">
+    <ul className="nav__links" onClick={onClickHandler}>
       {navLinks.map((link) => (
         <NavLinksItem key={link.id} {...link} />
       ))}

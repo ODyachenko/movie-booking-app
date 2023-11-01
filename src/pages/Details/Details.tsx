@@ -6,7 +6,7 @@ import './styles.scss';
 
 export const Details: FC = () => {
   return (
-    <section className="details">
+    <section className="details block">
       <div className="container">
         <h1 className="details__title title">Details Movie</h1>
         <img className="details__poster" src={poster} alt="poster" />
