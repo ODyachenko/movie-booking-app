@@ -1,0 +1,25 @@
+.nav {
+  padding: 25px 0;
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    font-weight: 600;
+    // color: #fff;
+
+    &-item {
+      & a {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        cursor: pointer;
+      }
+    }
+  }
+}
