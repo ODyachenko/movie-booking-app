@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 
 type TabsItemProps = {
   isActive: number;
+  tab: string;
   index: number;
   setIsActive: any;
 };
@@ -9,6 +10,7 @@ type TabsItemProps = {
 export const TabsItem: FC<TabsItemProps> = ({
   index,
   isActive,
+  tab,
   setIsActive,
 }) => {
   return (
@@ -16,7 +18,7 @@ export const TabsItem: FC<TabsItemProps> = ({
       className={`main__tabs-item ${isActive === index ? 'active' : ''}`}
       onClick={() => setIsActive(index)}
     >
-      <button>Now Showing</button>
+      <button>{tab}</button>
     </li>
   );
 };

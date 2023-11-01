@@ -18,3 +18,10 @@ export type NavLinksType = {
   path: string;
   icon: ReactNode;
 };
+
+export interface ImoviesList {
+  id: number;
+  poster: ReactNode;
+  name: string;
+  rating: number;
+}

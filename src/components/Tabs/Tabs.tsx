@@ -11,6 +11,7 @@ export const Tabs: FC = () => {
       {tabs.map((tab, index) => (
         <TabsItem
           key={tab}
+          tab={tab}
           index={index}
           isActive={isActive}
           setIsActive={setIsActive}
