@@ -1,0 +1,28 @@
+@import '../../assets/scss/variables.scss';
+
+.main {
+  &__title {
+    margin-bottom: 30px;
+  }
+  &__tabs {
+    display: flex;
+    max-width: 315px;
+    background: $secondaryBg;
+    border-radius: 12px;
+    padding: 10px;
+
+    &-item {
+      width: 50%;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      cursor: pointer;
+
+      padding: 10px 15px;
+
+      &.active {
+        background: $primaryBlue;
+      }
+    }
+  }
+}
