@@ -22,7 +22,7 @@ export const Details: FC = () => {
           Martial-arts master Shang-Chi confronts the past he thought he left
           behind when he's drawn into Read More
         </p>
-        <Link to={`/booking/${1}`}>
+        <Link to={`/booking/${1}`} className="details__btn">
           <Btn type="primary" text="Book Ticket" />
         </Link>
       </div>

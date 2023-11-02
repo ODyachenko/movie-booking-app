@@ -1,13 +1,34 @@
 import React, { FC } from 'react';
-import { Field } from '../UI/Field/Field';
+import { SelectFieldOptions } from '../../@types';
+import { Field } from '../UI/InputField/Field';
+import { SelectField } from '../UI/SelectField/SelectField';
+
+const cinema: SelectFieldOptions[] = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' },
+];
+
+const time: SelectFieldOptions[] = [
+  { value: '09:00', label: '09:00' },
+  { value: '11:00', label: '11:00' },
+  { value: '13:00', label: '13:00' },
+];
+
+const date: SelectFieldOptions[] = [
+  { value: '02.11.2023', label: '02.11.2023' },
+  { value: '03.11.2023', label: '03.11.2023' },
+  { value: '04.11.2023', label: '04.11.2023' },
+];
 
 export const Booking: FC = () => {
   return (
-    <section className="booking">
+    <section className="booking block">
       <div className="container">
         <h1 className="booking__title title">Select Seats</h1>
-        <Field text="Date" type="date" />
-        <Field text="Time" type="time" />
+        <SelectField options={cinema} caption="Cinema" />
+        <SelectField options={time} caption="Time" />
+        <SelectField options={date} caption="Date" />
         <div>
           <svg
             xmlns="http://www.w3.org/2000/svg"

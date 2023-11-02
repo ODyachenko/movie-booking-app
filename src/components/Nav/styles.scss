@@ -152,3 +152,24 @@
     }
   }
 }
+
+@media (min-width: 640px) {
+  .nav {
+    &__burger {
+      display: none;
+    }
+    &__links {
+      position: static;
+      max-width: 100%;
+      width: auto;
+      flex-direction: row;
+      gap: 40px;
+      padding: 0;
+    }
+    &.show {
+      & .nav__overlay {
+        display: none;
+      }
+    }
+  }
+}

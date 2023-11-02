@@ -1,0 +1,70 @@
+@import '../../assets/scss/variables.scss';
+
+.field {
+  display: block;
+  max-width: 315px;
+
+  &__caption {
+    display: block;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  &_select {
+    &__control {
+      min-height: auto !important;
+      background-color: transparent !important;
+      border-radius: 10px !important;
+      border: 1px solid rgba(178, 181, 187, 0.5) !important;
+      box-shadow: none !important;
+    }
+    &__input-container {
+      padding: 0 !important;
+      cursor: text !important;
+    }
+    &__value-container {
+      padding: 15px 25px !important;
+    }
+    &__input-container {
+      color: $primaryFieldColor !important;
+    }
+    &__indicator-separator {
+      display: none !important;
+    }
+    &__indicators {
+      cursor: pointer !important;
+    }
+    &__indicator {
+      color: $primaryFieldColor !important;
+
+      &:hover {
+        color: #fff !important;
+      }
+    }
+    &__single-value,
+    &__placeholder {
+      color: $primaryFieldColor !important;
+    }
+    &__menu {
+      background-color: $primaryBg !important;
+      color: $primaryFieldColor !important;
+    }
+    &__option {
+      cursor: pointer !important;
+
+      &--is-focused {
+        background-color: rgba(255, 255, 255, 0.2) !important;
+      }
+    }
+    &-container {
+      > div {
+        outline: none !important;
+        box-shadow: none !important;
+      }
+      &:hover,
+      &--menu-is-open {
+        border-color: rgba(178, 181, 187, 0.5);
+      }
+    }
+  }
+}

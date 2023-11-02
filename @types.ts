@@ -25,3 +25,8 @@ export interface ImoviesList {
   name: string;
   rating: number;
 }
+
+export type SelectFieldOptions = {
+  value: string;
+  label: string;
+};
