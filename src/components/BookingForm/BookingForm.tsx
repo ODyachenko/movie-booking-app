@@ -80,7 +80,7 @@ export const BookingForm: FC = () => {
           control={control}
         />
       </div>
-      <Seats register={register} />
+      <Seats register={register} errors={errors} />
       <Btn
         className="booking__btn"
         type="submit"
