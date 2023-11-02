@@ -23,7 +23,7 @@ export const Details: FC = () => {
           behind when he's drawn into Read More
         </p>
         <Link to={`/booking/${1}`} className="details__btn">
-          <Btn type="primary" text="Book Ticket" />
+          <Btn model="primary" text="Book Ticket" />
         </Link>
       </div>
     </section>

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { SelectField } from '../../UI/SelectField/SelectField';
 import { SelectFieldOptions } from '../../../@types';
-import screen from '../../assets/img/screen.svg';
 import { Seats } from './Seats';
 import './styles.scss';
 import { Btn } from '../../UI/Btn/Btn';
@@ -24,23 +24,69 @@ const date: SelectFieldOptions[] = [
   { value: '04.11.2023', label: '04.11.2023' },
 ];
 
+type FormData = {
+  cinema: {
+    value: string;
+    label: string;
+  };
+  date: {
+    value: string;
+    label: string;
+  };
+  time: {
+    value: string;
+    label: string;
+  };
+};
+
 export const BookingForm: FC = () => {
+  const {
+    control,
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<FormData>();
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    const result = {
+      ...data,
+      date: data.date.value,
+      time: data.time.value,
+      cinema: data.cinema.value,
+    };
+    console.log(result);
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <h1 className="booking__title title">Select Seats</h1>
       <div className="booking__inner">
-        <SelectField options={cinema} caption="Cinema" />
-        <SelectField options={time} caption="Time" />
-        <SelectField options={date} caption="Date" />
+        <SelectField
+          options={cinema}
+          caption="Cinema"
+          errors={errors}
+          control={control}
+        />
+        <SelectField
+          options={time}
+          caption="Time"
+          errors={errors}
+          control={control}
+        />
+        <SelectField
+          options={date}
+          caption="Date"
+          errors={errors}
+          control={control}
+        />
       </div>
-      <img className="booking__screen" src={screen} alt="screen" />
-      <Seats />
-      <div className="booking__footer">
-        <span className="booking__footer-label">Selected</span>
-        <span className="booking__footer-label">Reserved</span>
-        <span className="booking__footer-label">Avialable</span>
-      </div>
-      <Btn className="booking__btn" type="primary" text="Pay Now" />
+      <Seats register={register} />
+      <Btn
+        className="booking__btn"
+        type="submit"
+        model="primary"
+        text="Pay Now"
+      />
     </form>
   );
 };

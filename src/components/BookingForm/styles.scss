@@ -11,6 +11,10 @@
     width: 100%;
     margin: 0 auto;
 
+    & .error .field_select__control {
+      border: 1px solid $primaryRed !important;
+    }
+
     &:not(:last-of-type) {
       margin-bottom: 15px;
     }
@@ -62,6 +66,7 @@
         border-radius: 10px;
         border: 1px solid rgba(178, 181, 187, 0.5);
       }
+
       & input:checked ~ span {
         background-color: $primaryBlue;
       }
@@ -154,6 +159,18 @@
 
       &-label {
         padding-left: 25px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .booking {
+    &__seats {
+      &-field {
+        & input:not(:disabled):not(:checked):hover ~ span {
+          background-color: rgba(178, 181, 187, 0.3);
+        }
       }
     }
   }
