@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 export type BtnType = {
+  className?: string;
   text: string;
   type: 'primary' | 'secondary';
   handler?: () => void;

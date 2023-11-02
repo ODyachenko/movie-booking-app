@@ -10,7 +10,7 @@ type SelectFieldProps = {
 
 export const SelectField: FC<SelectFieldProps> = ({ options, caption }) => {
   return (
-    <label className="field">
+    <label className="booking__field field">
       <span className="field__caption">{caption}</span>
       <Select
         classNamePrefix="field_select"

@@ -1,0 +1,160 @@
+@import '../../assets/scss/variables.scss';
+
+.booking {
+  &__title {
+    margin-bottom: 20px;
+  }
+  &__inner {
+    margin-bottom: 40px;
+  }
+  &__field {
+    width: 100%;
+    margin: 0 auto;
+
+    &:not(:last-of-type) {
+      margin-bottom: 15px;
+    }
+  }
+  &__screen {
+    margin: 0 auto;
+  }
+  &__seats {
+    margin: 0 auto 50px;
+
+    &-row {
+      display: flex;
+      gap: 8px;
+
+      &:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
+    &-cell {
+      width: 25px;
+      height: 25px;
+    }
+
+    &-field {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      & input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+      & span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        border-radius: 10px;
+        border: 1px solid rgba(178, 181, 187, 0.5);
+      }
+      & input:checked ~ span {
+        background-color: $primaryBlue;
+      }
+      & input:disabled ~ span {
+        background-color: $primaryRed;
+      }
+    }
+  }
+  &__footer {
+    display: flex;
+    max-width: 290px;
+    justify-content: space-between;
+    margin: 0 auto 45px;
+
+    &-label {
+      position: relative;
+      color: $primaryFieldColor;
+      padding-left: 17px;
+
+      &::before {
+        content: '';
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        margin: auto;
+      }
+      &:nth-child(1)::before {
+        background: $primaryBlue;
+      }
+      &:nth-child(2)::before {
+        background: $primaryRed;
+      }
+      &:nth-child(3)::before {
+        border: 1px solid rgba(178, 181, 187, 0.5);
+      }
+    }
+  }
+  &__btn {
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 480px) {
+  .booking {
+    &__seats {
+      &-cell {
+        width: 30px;
+        height: 30px;
+      }
+    }
+    &__footer {
+      max-width: 335px;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .booking {
+    &__inner {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+    &__field {
+      margin: 0;
+
+      &:not(:last-of-type) {
+        margin: 0;
+      }
+    }
+    &__screen {
+      width: 530px;
+    }
+    &__seats {
+      &-row {
+        gap: 15px;
+      }
+      &-cell {
+        width: 40px;
+        height: 40px;
+      }
+    }
+    &__footer {
+      max-width: 480px;
+
+      &-label {
+        padding-left: 25px;
+      }
+    }
+  }
+}
