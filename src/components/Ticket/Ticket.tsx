@@ -14,8 +14,8 @@ export const Ticket: FC = () => {
           <strong>06/09/2021</strong>
         </div>
         <div className="ticket__info">
-          <span>Seats</span>
-          <strong>c4, c5</strong>
+          <span>Seat</span>
+          <strong>c4</strong>
         </div>
         <div className="ticket__info">
           <span>Location</span>

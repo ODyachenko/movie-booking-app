@@ -1,0 +1,54 @@
+.settings {
+  &__title {
+    margin-bottom: 25px;
+  }
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+
+  &__avatar {
+    width: 48px;
+    height: 48px;
+    margin-right: 15px;
+  }
+  &__name {
+    font-size: 18px;
+    color: #fff;
+  }
+}
+
+.category {
+  &__caption {
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+
+    margin-bottom: 25px;
+  }
+  &__list {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 35px;
+
+    &-item {
+      display: flex;
+      align-items: center;
+
+      &:not(:last-child) {
+        margin-bottom: 20px;
+      }
+    }
+    &-ico {
+      margin-right: 15px;
+    }
+    &-name {
+      font-size: 18px;
+      color: #fff;
+    }
+  }
+}

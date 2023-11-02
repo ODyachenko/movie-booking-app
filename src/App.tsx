@@ -5,7 +5,7 @@ import { Details } from './pages/Details/Details';
 import { ETicket } from './pages/ETicket/ETicket';
 import { Home } from './pages/Home';
 import { NotFound } from './pages/NotFound';
-import { Settings } from './pages/Settings';
+import { Settings } from './pages/Settings/Settings';
 import { YourMovie } from './pages/YourMovie';
 
 function App() {
