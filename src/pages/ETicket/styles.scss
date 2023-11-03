@@ -9,4 +9,8 @@
     line-height: 1.5;
     margin-bottom: 40px;
   }
+  &__list {
+    display: flex;
+    gap: 30px;
+  }
 }

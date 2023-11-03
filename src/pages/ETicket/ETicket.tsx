@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { Ticket } from '../../components/Ticket/Ticket';
-import { Btn } from '../../UI/Btn/Btn';
 import './styles.scss';
 
 export const ETicket: FC = () => {
@@ -13,8 +12,10 @@ export const ETicket: FC = () => {
           Come to the cinema, show and scan the barcode to the space provided.
           Continue to comply with health protocols.
         </p>
-        <Ticket />
-        <Btn model="primary" text="Download E-Ticket" />
+        <div className="e-ticket__list">
+          <Ticket />
+          <Ticket />
+        </div>
       </div>
     </section>
   );
