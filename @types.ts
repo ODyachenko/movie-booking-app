@@ -21,11 +21,31 @@ export type NavLinksType = {
   icon: ReactNode;
 };
 
+export type BookingInfo = {
+  cinemas: {
+    value: string;
+    label: string;
+  };
+  dates: {
+    value: string;
+    label: string;
+  };
+  time: {
+    value: string;
+    label: string;
+  };
+};
+
 export interface ImoviesList {
-  id: number;
-  poster: ReactNode;
+  id: string;
+  poster: string;
+  actors: string[];
+  synopsis: string;
+  tags: string[];
+  director: string;
   name: string;
   rating: number;
+  bookingInfo: BookingInfo;
 }
 
 export type SelectFieldOptions = {

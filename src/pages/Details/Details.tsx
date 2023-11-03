@@ -1,30 +1,56 @@
-import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
+import React, { FC, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Btn } from '../../UI/Btn/Btn';
-import poster from '../../assets/img/poster1.png';
+import { ImoviesList } from '../../../@types';
 import './styles.scss';
+import { MovieTags } from '../../components/MovieTags/MovieTags';
+import { useAppSelector } from '../../hooks/hooks';
 
 export const Details: FC = () => {
+  const { id } = useParams<string>();
+  const navigate = useNavigate();
+  const { topMovies } = useAppSelector((state) => state.movies);
+  const [movie, setMovie] = useState<ImoviesList | null>(null);
+
+  useEffect(() => {
+    setMovie(topMovies.filter((movie) => movie.id === id)[0]);
+  }, [id, topMovies]);
+
+  const onCLickHandler = () => {
+    navigate(`/booking/${id}`);
+  };
+
   return (
     <section className="details block">
       <div className="container">
         <h1 className="details__title title">Details Movie</h1>
-        <img className="details__poster" src={poster} alt="poster" />
-        <h2 className="details__subtitle">Shang - Chi</h2>
-        <h3 className="details__director">Director: Destin Daniel Cretton</h3>
-        <ul className="details__tags">
-          <li className="details__tags-item">action</li>
-          <li className="details__tags-item">Fiction Fantasy</li>
-          <li className="details__tags-item">02h 43m</li>
-        </ul>
-        <h2 className="details__subtitle">Synopsis</h2>
-        <p className="details__text">
-          Martial-arts master Shang-Chi confronts the past he thought he left
-          behind when he's drawn into Read More
-        </p>
-        <Link to={`/booking/${1}`} className="details__btn">
-          <Btn model="primary" text="Book Ticket" />
-        </Link>
+        {movie?.id && (
+          <div className="details__content">
+            <img
+              className="details__poster"
+              src={movie.poster}
+              alt={movie.name}
+            />
+            <div className="details__info">
+              <h2 className="details__subtitle">{movie.name}</h2>
+              <h3 className="details__cast">
+                <strong>Director:</strong> {movie.director}
+              </h3>
+              <h3 className="details__cast">
+                <strong>Actors:</strong> {movie.actors}
+              </h3>
+              <MovieTags tags={movie.tags} />
+              <h2 className="details__subtitle">Synopsis</h2>
+              <p className="details__text">{movie.synopsis}</p>
+              <Btn
+                className="details__btn"
+                model="primary"
+                text="Book Ticket"
+                handler={onCLickHandler}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Movies } from '../Movies/Movies';
 import { ImoviesList } from '../../../@types';
 
-const moviesList: ImoviesList[] = [
+const moviesList: any[] = [
   {
     id: 1,
     poster: require('../../assets/img/poster1.png'),

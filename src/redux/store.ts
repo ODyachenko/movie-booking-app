@@ -6,7 +6,11 @@ export const store = configureStore({
   reducer: {
     counter: counterSlice,
     movies: moviesSlice,
+    // [postsApi.reducerPath]: postsApi.reducer,
   },
+  // middleware: (getDefaultMiddleware: any) =>
+  //   getDefaultMiddleware()
+  //     .concat(postsApi.middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

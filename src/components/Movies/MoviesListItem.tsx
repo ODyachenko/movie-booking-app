@@ -10,7 +10,7 @@ export const MoviesListItem: FC<ImoviesList> = ({
 }) => {
   return (
     <Link className="movies__list-item movie" to={`/details/${id}`}>
-      <img className="movie__poster" src={String(poster)} alt={name} />
+      <img className="movie__poster" src={poster} alt={name} />
       <h2 className="movie__name">{name}</h2>
       <span className="movie__rating">
         <svg
@@ -42,7 +42,7 @@ export const MoviesListItem: FC<ImoviesList> = ({
             </linearGradient>
           </defs>
         </svg>
-        {/* {rating} */}
+        {rating}
       </span>
     </Link>
   );
