@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { NavLinksType } from '../../../@types';
+import { Btn } from '../../UI/Btn/Btn';
 import { NavLinksItem } from './NavLinksItem';
 
 const navLinks: NavLinksType[] = [
@@ -63,11 +65,27 @@ const navLinks: NavLinksType[] = [
 ];
 
 export const NavLinks: FC<any> = ({ onClickHandler }) => {
+  const navigate = useNavigate();
+
+  const onCLickSignUp = () => {
+    navigate('/register');
+  };
+
   return (
-    <ul className="nav__links" onClick={onClickHandler}>
-      {navLinks.map((link) => (
-        <NavLinksItem key={link.id} {...link} />
-      ))}
-    </ul>
+    <>
+      <ul className="nav__links" onClick={onClickHandler}>
+        {navLinks.map((link) => (
+          <NavLinksItem key={link.id} {...link} />
+        ))}
+        <li className="nav__links-item">
+          <Btn
+            className="nav__btn"
+            text="Sign Up"
+            model="primary"
+            handler={onCLickSignUp}
+          />
+        </li>
+      </ul>
+    </>
   );
 };

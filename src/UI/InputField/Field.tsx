@@ -7,10 +7,11 @@ export const Field: FC<FieldType> = ({ type, text, handler }) => {
     <label className="field">
       <span className="field__caption">{text}</span>
       <input
+        name={text}
         className="field__item"
+        onChange={handler}
         type={type}
         placeholder={text}
-        onChange={handler}
       />
     </label>
   );

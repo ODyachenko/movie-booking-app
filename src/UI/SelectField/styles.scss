@@ -1,9 +1,6 @@
 @import '../../assets/scss/variables.scss';
 
 .field {
-  display: block;
-  max-width: 315px;
-
   &__caption {
     display: block;
     color: #fff;
@@ -11,6 +8,7 @@
   }
   &__error {
     display: block;
+    color: $primaryRed;
     padding-top: 5px;
   }
 
