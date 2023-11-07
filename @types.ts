@@ -47,9 +47,16 @@ export interface ImoviesList {
   name: string;
   rating: number;
   bookingInfo: BookingInfo;
+  type: string;
 }
 
 export type SelectFieldOptions = {
   value: string;
   label: string;
+};
+
+export type User = {
+  fullname: string;
+  avatarUrl: string;
+  email: string;
 };

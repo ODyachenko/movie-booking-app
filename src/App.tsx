@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Nav } from './components/Nav/Nav';
-import supabase from './config/supabaseClient';
 import { useAppDispatch } from './hooks/hooks';
 import { Booking } from './pages/Booking';
 import { Details } from './pages/Details/Details';
@@ -12,31 +11,13 @@ import { NotFound } from './pages/NotFound';
 import { Register } from './pages/Register';
 import { Settings } from './pages/Settings/Settings';
 import { YourMovie } from './pages/YourMovie';
-import { setTopMovies } from './redux/slices/moviesSlice';
 import { setIsAuth } from './redux/slices/userSlice';
 
 function App() {
   const dispatch = useAppDispatch();
 
-  const fetchMovies = async () => {
-    try {
-      const { data, error } = await supabase.from('movies').select();
-
-      if (error) {
-        throw error;
-      }
-      dispatch(setTopMovies(data));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
-    fetchMovies();
-  }, []);
-
-  useEffect(() => {
-    localStorage.getItem('token')
+    localStorage.getItem(String(process.env.REACT_APP_TOKEN))
       ? dispatch(setIsAuth(true))
       : dispatch(setIsAuth(false));
   }, []);

@@ -1,12 +1,19 @@
 import React, { FC } from 'react';
-import avatar from '../../assets/img/avatar.png';
+import { useAppSelector } from '../../hooks/hooks';
 
 export const User: FC = () => {
+  const { authUser } = useAppSelector((state) => state.user);
+
   return (
     <div className="settings__user user">
-      <img className="user__avatar" src={avatar} alt="" />
+      <img
+        className="user__avatar"
+        src={authUser.avatarUrl}
+        alt={authUser.fullname}
+      />
       <div className="user__info">
-        <h2 className="user__name">Miles Morales</h2>
+        <h2 className="user__name">{authUser.fullname}</h2>
+        <span className="user__email">{authUser.email}</span>
       </div>
     </div>
   );

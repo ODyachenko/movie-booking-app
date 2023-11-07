@@ -32,6 +32,16 @@ body {
   color: #fff;
 }
 
+.swiper-slide {
+  max-width: 190px;
+}
+
+@media (min-width: 1024px) {
+  .swiper-slide {
+    max-width: 230px;
+  }
+}
+
 @media (min-width: 1024px) {
   .container {
     padding: 0 30px;

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import supabase from '../../config/supabaseClient';
 import { v4 } from 'uuid';
@@ -10,10 +10,10 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { setIsAuth } from '../../redux/slices/userSlice';
 
 type FormData = {
-  avatarUrl?: string;
-  fullname: string;
   email: string;
   password: string;
+  fullname: string;
+  avatarUrl?: string;
 };
 
 const initialState = `${process.env.REACT_APP_STORAGE_URI}/avatar_private.png`;
@@ -30,8 +30,23 @@ export const RegisterForm: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    if (localStorage.getItem(String(process.env.REACT_APP_TOKEN))) {
+      navigate('/');
+    }
+  }, []);
+
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    const formData = { ...data, avatar };
+    const formData = {
+      email: data.email,
+      password: data.password,
+      options: {
+        data: {
+          fullname: data.fullname,
+          avatarUrl: avatar,
+        },
+      },
+    };
 
     try {
       setIsLoading(true);
@@ -40,8 +55,6 @@ export const RegisterForm: FC = () => {
       if (response.error) {
         throw response.error;
       }
-      response.data.session &&
-        localStorage.setItem('token', response.data.session.access_token);
       dispatch(setIsAuth(true));
       navigate('/');
 

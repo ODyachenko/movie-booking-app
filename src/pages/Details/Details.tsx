@@ -7,14 +7,14 @@ import { MovieTags } from '../../components/MovieTags/MovieTags';
 import { useAppSelector } from '../../hooks/hooks';
 
 export const Details: FC = () => {
+  const { movies } = useAppSelector((state) => state.movies);
+  const [movie, setMovie] = useState<ImoviesList | null>(null);
   const { id } = useParams<string>();
   const navigate = useNavigate();
-  const { topMovies } = useAppSelector((state) => state.movies);
-  const [movie, setMovie] = useState<ImoviesList | null>(null);
 
   useEffect(() => {
-    setMovie(topMovies.filter((movie) => movie.id === id)[0]);
-  }, [id, topMovies]);
+    setMovie(movies.filter((movie) => movie.id === id)[0]);
+  }, [id, movies]);
 
   const onCLickHandler = () => {
     navigate(`/booking/${id}`);

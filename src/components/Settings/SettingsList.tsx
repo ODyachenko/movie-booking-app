@@ -1,4 +1,5 @@
 import React from 'react';
+import supabase from '../../config/supabaseClient';
 import { SettingsListItem } from './SettingsListItem';
 
 const categoryList = [
@@ -6,21 +7,25 @@ const categoryList = [
     id: 1,
     icon: require('../../assets/img/category1.png'),
     text: 'Personal Data',
+    type: 'data',
   },
   {
     id: 5,
     icon: require('../../assets/img/category5.png'),
     text: 'Your Ticket',
+    type: 'ticket',
   },
   {
     id: 3,
     icon: require('../../assets/img/category3.png'),
     text: 'Deactive Account',
+    type: 'remove',
   },
   {
     id: 6,
     icon: require('../../assets/img/category6.png'),
     text: 'Logout',
+    type: 'logout',
   },
 ];
 

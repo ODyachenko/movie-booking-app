@@ -25,7 +25,7 @@ export const LoginForm: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem(String(process.env.REACT_APP_TOKEN))) {
       navigate('/');
     }
   }, []);
@@ -38,11 +38,8 @@ export const LoginForm: FC = () => {
       if (response.error) {
         throw response.error;
       }
-      console.log(response.data);
-      localStorage.setItem('token', response.data.session.access_token);
       dispatch(setIsAuth(true));
       navigate('/');
-
       reset();
     } catch (error: any) {
       alert(error.message);
