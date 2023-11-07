@@ -15,11 +15,12 @@ type FormData = {
 
 export const RegisterForm: FC = () => {
   const [avatar, setAvatar] = useState(
-    `https://xbsthytyytbynxdizdic.supabase.co/storage/v1/object/public/avatars/avatar_private.png`
+    `${process.env.REACT_APP_STORAGE_URI}/avatar_private.png`
   );
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm<FormData>({ mode: 'onChange' });
 
@@ -31,8 +32,9 @@ export const RegisterForm: FC = () => {
       if (response.error) {
         throw response.error;
       }
-      console.log('success');
+      reset();
     } catch (error: any) {
+      alert(error.message);
       console.error(error.message);
     }
   };
@@ -40,7 +42,6 @@ export const RegisterForm: FC = () => {
   const handleChangeFile = async (event: any) => {
     try {
       const avatarFile = event.target.files[0];
-
       const { data, error } = await supabase.storage
         .from('avatars')
         .upload(v4(), avatarFile, {
@@ -51,8 +52,8 @@ export const RegisterForm: FC = () => {
       if (error) {
         throw error;
       }
-      setAvatar(data.path);
-    } catch (error) {
+      setAvatar(`${process.env.REACT_APP_STORAGE_URI}/${data.path}`);
+    } catch (error: any) {
       console.error(error);
     }
   };

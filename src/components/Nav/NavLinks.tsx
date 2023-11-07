@@ -67,8 +67,8 @@ const navLinks: NavLinksType[] = [
 export const NavLinks: FC<any> = ({ onClickHandler }) => {
   const navigate = useNavigate();
 
-  const onCLickSignUp = () => {
-    navigate('/register');
+  const onCLickSignIn = () => {
+    navigate('/login');
   };
 
   return (
@@ -80,9 +80,9 @@ export const NavLinks: FC<any> = ({ onClickHandler }) => {
         <li className="nav__links-item">
           <Btn
             className="nav__btn"
-            text="Sign Up"
+            text="Sign In"
             model="primary"
-            handler={onCLickSignUp}
+            handler={onCLickSignIn}
           />
         </li>
       </ul>

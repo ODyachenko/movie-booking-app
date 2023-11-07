@@ -1,3 +1,5 @@
+@import '../../assets/scss/variables.scss';
+
 .form {
   max-width: 330px;
   background: #32363d;
@@ -29,6 +31,25 @@
       visibility: hidden;
       position: absolute;
       z-index: -1;
+    }
+  }
+  &__link {
+    display: block;
+    color: #fff;
+    text-align: center;
+    padding-top: 10px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .form {
+    &__link {
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: $primaryBlue;
+      }
     }
   }
 }

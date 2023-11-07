@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import supabase from '../../config/supabaseClient';
 import { Btn } from '../../UI/Btn/Btn';
@@ -14,8 +15,16 @@ export const LoginForm: FC = () => {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm<FormData>({ mode: 'onChange' });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      navigate('/');
+    }
+  }, []);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
@@ -24,9 +33,14 @@ export const LoginForm: FC = () => {
       if (response.error) {
         throw response.error;
       }
-      console.log('success');
+      // console.log(response.data);
+      localStorage.setItem('token', response.data.session.access_token);
+      navigate('/');
+
+      reset();
     } catch (error: any) {
-      console.error(error.message);
+      alert(error.message);
+      console.error(error);
     }
   };
 
@@ -69,6 +83,9 @@ export const LoginForm: FC = () => {
         )}
       </label>
       <Btn type="submit" model="primary" text="Sign In" />
+      <Link className="form__link" to="/register">
+        Don't have an account?
+      </Link>
     </form>
   );
 };
