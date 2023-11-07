@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { NavLinksType } from '../../../@types';
+import { useAppSelector } from '../../hooks/hooks';
 import { Btn } from '../../UI/Btn/Btn';
 import { NavLinksItem } from './NavLinksItem';
 
@@ -43,28 +44,10 @@ const navLinks: NavLinksType[] = [
       </svg>
     ),
   },
-  {
-    id: 3,
-    text: 'Settings',
-    path: '/settings',
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-      >
-        <path
-          d="M12 15.1739C16.3386 15.1739 20 15.8789 20 18.599C20 21.32 16.3146 22 12 22C7.66237 22 4 21.295 4 18.575C4 15.8539 7.68538 15.1739 12 15.1739ZM12 2C14.9391 2 17.294 4.35402 17.294 7.29105C17.294 10.2281 14.9391 12.5831 12 12.5831C9.0619 12.5831 6.70601 10.2281 6.70601 7.29105C6.70601 4.35402 9.0619 2 12 2Z"
-          fill="#636882"
-        />
-      </svg>
-    ),
-  },
 ];
 
 export const NavLinks: FC<any> = ({ onClickHandler }) => {
+  const { isAuth } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
 
   const onCLickSignIn = () => {
@@ -77,14 +60,34 @@ export const NavLinks: FC<any> = ({ onClickHandler }) => {
         {navLinks.map((link) => (
           <NavLinksItem key={link.id} {...link} />
         ))}
-        <li className="nav__links-item">
-          <Btn
-            className="nav__btn"
-            text="Sign In"
-            model="primary"
-            handler={onCLickSignIn}
-          />
-        </li>
+        {isAuth ? (
+          <li className="nav__links-item">
+            <NavLink to="/settings">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M12 15.1739C16.3386 15.1739 20 15.8789 20 18.599C20 21.32 16.3146 22 12 22C7.66237 22 4 21.295 4 18.575C4 15.8539 7.68538 15.1739 12 15.1739ZM12 2C14.9391 2 17.294 4.35402 17.294 7.29105C17.294 10.2281 14.9391 12.5831 12 12.5831C9.0619 12.5831 6.70601 10.2281 6.70601 7.29105C6.70601 4.35402 9.0619 2 12 2Z"
+                  fill="#636882"
+                />
+              </svg>
+              <span>Settings</span>
+            </NavLink>
+          </li>
+        ) : (
+          <li className="nav__links-item">
+            <Btn
+              className="nav__btn"
+              text="Sign In"
+              model="primary"
+              handler={onCLickSignIn}
+            />
+          </li>
+        )}
       </ul>
     </>
   );

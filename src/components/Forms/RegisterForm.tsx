@@ -5,6 +5,9 @@ import { v4 } from 'uuid';
 import { Btn } from '../../UI/Btn/Btn';
 import './styles.scss';
 import '../../UI/InputField/styles.scss';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/hooks';
+import { setIsAuth } from '../../redux/slices/userSlice';
 
 type FormData = {
   avatarUrl?: string;
@@ -13,29 +16,42 @@ type FormData = {
   password: string;
 };
 
+const initialState = `${process.env.REACT_APP_STORAGE_URI}/avatar_private.png`;
+
 export const RegisterForm: FC = () => {
-  const [avatar, setAvatar] = useState(
-    `${process.env.REACT_APP_STORAGE_URI}/avatar_private.png`
-  );
   const {
     handleSubmit,
     register,
     reset,
     formState: { errors },
   } = useForm<FormData>({ mode: 'onChange' });
+  const [avatar, setAvatar] = useState(initialState);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     const formData = { ...data, avatar };
 
     try {
+      setIsLoading(true);
       const response = await supabase.auth.signUp(formData);
+
       if (response.error) {
         throw response.error;
       }
+      response.data.session &&
+        localStorage.setItem('token', response.data.session.access_token);
+      dispatch(setIsAuth(true));
+      navigate('/');
+
+      setAvatar(initialState);
       reset();
     } catch (error: any) {
       alert(error.message);
       console.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -44,10 +60,7 @@ export const RegisterForm: FC = () => {
       const avatarFile = event.target.files[0];
       const { data, error } = await supabase.storage
         .from('avatars')
-        .upload(v4(), avatarFile, {
-          cacheControl: '3600',
-          upsert: false,
-        });
+        .upload(v4(), avatarFile);
 
       if (error) {
         throw error;
@@ -123,7 +136,7 @@ export const RegisterForm: FC = () => {
           <span className="field__error">{errors.password.message}</span>
         )}
       </label>
-      <Btn type="submit" model="primary" text="Sign Up" />
+      <Btn type="submit" model="primary" text="Sign Up" loading={isLoading} />
     </form>
   );
 };

@@ -13,6 +13,7 @@ import { Register } from './pages/Register';
 import { Settings } from './pages/Settings/Settings';
 import { YourMovie } from './pages/YourMovie';
 import { setTopMovies } from './redux/slices/moviesSlice';
+import { setIsAuth } from './redux/slices/userSlice';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -32,6 +33,12 @@ function App() {
 
   useEffect(() => {
     fetchMovies();
+  }, []);
+
+  useEffect(() => {
+    localStorage.getItem('token')
+      ? dispatch(setIsAuth(true))
+      : dispatch(setIsAuth(false));
   }, []);
 
   return (

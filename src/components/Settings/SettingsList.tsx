@@ -8,24 +8,14 @@ const categoryList = [
     text: 'Personal Data',
   },
   {
-    id: 2,
-    icon: require('../../assets/img/category2.png'),
-    text: 'Email & Payment',
+    id: 5,
+    icon: require('../../assets/img/category5.png'),
+    text: 'Your Ticket',
   },
   {
     id: 3,
     icon: require('../../assets/img/category3.png'),
     text: 'Deactive Account',
-  },
-  {
-    id: 4,
-    icon: require('../../assets/img/category4.png'),
-    text: 'Notification',
-  },
-  {
-    id: 5,
-    icon: require('../../assets/img/category5.png'),
-    text: 'Your Ticket',
   },
   {
     id: 6,

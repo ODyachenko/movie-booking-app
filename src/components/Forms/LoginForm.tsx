@@ -1,10 +1,12 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import supabase from '../../config/supabaseClient';
 import { Btn } from '../../UI/Btn/Btn';
 import './styles.scss';
 import '../../UI/InputField/styles.scss';
+import { useAppDispatch } from '../../hooks/hooks';
+import { setIsAuth } from '../../redux/slices/userSlice';
 
 type FormData = {
   email: string;
@@ -18,7 +20,9 @@ export const LoginForm: FC = () => {
     reset,
     formState: { errors },
   } = useForm<FormData>({ mode: 'onChange' });
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -28,19 +32,23 @@ export const LoginForm: FC = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
+      setIsLoading(true);
       const response = await supabase.auth.signInWithPassword(data);
 
       if (response.error) {
         throw response.error;
       }
-      // console.log(response.data);
+      console.log(response.data);
       localStorage.setItem('token', response.data.session.access_token);
+      dispatch(setIsAuth(true));
       navigate('/');
 
       reset();
     } catch (error: any) {
       alert(error.message);
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -82,7 +90,7 @@ export const LoginForm: FC = () => {
           <span className="field__error">{errors.password.message}</span>
         )}
       </label>
-      <Btn type="submit" model="primary" text="Sign In" />
+      <Btn type="submit" model="primary" text="Sign In" loading={isLoading} />
       <Link className="form__link" to="/register">
         Don't have an account?
       </Link>

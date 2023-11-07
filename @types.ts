@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 export type BtnType = {
   className?: string;
   text: string;
+  loading?: boolean;
   type?: 'button' | 'submit';
   model: 'primary' | 'secondary';
   handler?: () => void;
