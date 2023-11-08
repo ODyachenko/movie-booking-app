@@ -22,21 +22,6 @@ export type NavLinksType = {
   icon: ReactNode;
 };
 
-export type BookingInfo = {
-  cinemas: {
-    value: string;
-    label: string;
-  };
-  dates: {
-    value: string;
-    label: string;
-  };
-  time: {
-    value: string;
-    label: string;
-  };
-};
-
 export interface ImoviesList {
   id: string;
   poster: string;
@@ -46,7 +31,6 @@ export interface ImoviesList {
   director: string;
   name: string;
   rating: number;
-  bookingInfo: BookingInfo;
   type: string;
 }
 
@@ -59,4 +43,29 @@ export type User = {
   fullname: string;
   avatarUrl: string;
   email: string;
+};
+
+export type BookingType = {
+  cinema?: string;
+  date?: string;
+  time?: string;
+};
+
+export type BookingInfo = {
+  [x: string]: any;
+  dates: [
+    {
+      option: SelectFieldOptions;
+      time: [
+        {
+          seats: string[];
+          option: SelectFieldOptions;
+        }
+      ];
+    }
+  ];
+};
+
+export type BookingItem = {
+  option: SelectFieldOptions;
 };

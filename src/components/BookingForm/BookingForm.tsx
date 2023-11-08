@@ -1,26 +1,26 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { SingleValue } from 'react-select';
+import supabase from '../../config/supabaseClient';
 import { SelectField } from '../../UI/SelectField/SelectField';
 import { Seats } from './Seats';
-import './styles.scss';
 import { Btn } from '../../UI/Btn/Btn';
-import { useAppSelector } from '../../hooks/hooks';
-import { useParams } from 'react-router-dom';
-import { BookingInfo } from '../../../@types';
+import { getAvailableDates } from '../../utils/getAvailableDates';
+import { getAvailableTime } from '../../utils/getAvailableTime';
+import { getAvailableSeats } from '../../utils/getAvailableSeats';
+import {
+  BookingType,
+  BookingInfo,
+  SelectFieldOptions,
+  BookingItem,
+} from '../../../@types';
+import './styles.scss';
 
 type FormData = {
-  cinema: {
-    value: string;
-    label: string;
-  };
-  date: {
-    value: string;
-    label: string;
-  };
-  time: {
-    value: string;
-    label: string;
-  };
+  cinema: SelectFieldOptions;
+  date: SelectFieldOptions;
+  time: SelectFieldOptions;
 };
 
 export const BookingForm: FC = () => {
@@ -31,15 +31,38 @@ export const BookingForm: FC = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const { id } = useParams();
-  const [bookingInfo, setBookingInfo] = useState<any | null>(null);
-  const { topMovies } = useAppSelector((state) => state.movies);
+  const { id } = useParams<string>();
+  const [booking, setBooking] = useState<BookingType>({
+    cinema: '',
+    date: '',
+    time: '',
+  });
+  const [bookingInfo, setBookingInfo] = useState<BookingInfo[]>([]);
+  const [cinema, setCinema] = useState<SelectFieldOptions[]>([]);
+  const [dates, setDates] = useState<SelectFieldOptions[]>([]);
+  const [time, setTime] = useState<SelectFieldOptions[]>([]);
+  const [seats, setSeats] = useState([]);
 
   useEffect(() => {
-    setBookingInfo(
-      topMovies.filter((movie) => movie.id === id)[0]?.bookingInfo
-    );
-  }, [topMovies, id]);
+    fetchBookingInfo();
+  }, [id]);
+
+  const fetchBookingInfo = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('booking')
+        .select()
+        .eq('movieId', id);
+
+      if (error) {
+        throw error;
+      }
+      setBookingInfo(data[0].bookingInfo);
+      setCinema(data[0].bookingInfo.map((item: BookingItem) => item.option));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const result = {
@@ -50,33 +73,68 @@ export const BookingForm: FC = () => {
     };
     console.log(result);
   };
+  const onChangeCinema = (
+    event: SingleValue<SelectFieldOptions>,
+    callback: (event: SingleValue<SelectFieldOptions>) => void
+  ) => {
+    callback(event);
+    setBooking({ ...booking, cinema: event?.value });
+    setDates(getAvailableDates(bookingInfo, event));
+  };
+  const onChangeDates = (
+    event: SingleValue<SelectFieldOptions>,
+    callback: (event: SingleValue<SelectFieldOptions>) => void
+  ) => {
+    callback(event);
+    setBooking({ ...booking, date: event?.value });
+    setTime(getAvailableTime(bookingInfo, event, booking.cinema));
+  };
+
+  const onChangeTime = (
+    event: SingleValue<SelectFieldOptions>,
+    callback: (event: SingleValue<SelectFieldOptions>) => void
+  ) => {
+    callback(event);
+    setBooking({ ...booking, time: event?.value });
+    setSeats(
+      getAvailableSeats(bookingInfo, event, booking.cinema, booking.date)
+    );
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1 className="booking__title title">Select Seats</h1>
-      {bookingInfo && (
-        <div className="booking__inner">
+      <div className="booking__inner">
+        <SelectField
+          options={cinema}
+          caption="Cinema"
+          errors={errors}
+          control={control}
+          onChangeHandler={onChangeCinema}
+        />
+        {booking.cinema && (
           <SelectField
-            options={bookingInfo.cinemas}
-            caption="Cinema"
-            errors={errors}
-            control={control}
-          />
-          <SelectField
-            options={bookingInfo.dates}
+            options={dates}
             caption="Date"
             errors={errors}
             control={control}
+            onChangeHandler={onChangeDates}
           />
+        )}
+        {booking.date && (
           <SelectField
-            options={bookingInfo.time}
+            options={time}
             caption="Time"
             errors={errors}
             control={control}
+            onChangeHandler={onChangeTime}
           />
-        </div>
+        )}
+      </div>
+
+      {booking.time && (
+        <Seats register={register} errors={errors} availableSeats={seats} />
       )}
-      <Seats register={register} errors={errors} />
       <Btn
         className="booking__btn"
         type="submit"

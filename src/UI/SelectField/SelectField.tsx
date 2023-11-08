@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import Select from 'react-select';
 import { Controller } from 'react-hook-form';
-import { SelectFieldOptions, BookingInfo } from '../../../@types';
+import { SelectFieldOptions } from '../../../@types';
 import './styles.scss';
 
 type SelectFieldProps = {
@@ -9,6 +9,7 @@ type SelectFieldProps = {
   caption: string;
   errors: any;
   control: any;
+  onChangeHandler: any;
 };
 
 export const SelectField: FC<SelectFieldProps> = ({
@@ -16,6 +17,7 @@ export const SelectField: FC<SelectFieldProps> = ({
   caption,
   errors,
   control,
+  onChangeHandler,
 }) => {
   return (
     <label className="booking__field field">
@@ -30,7 +32,7 @@ export const SelectField: FC<SelectFieldProps> = ({
               name={name}
               ref={ref}
               value={value}
-              onChange={(e) => onChange(e)}
+              onChange={(e) => onChangeHandler(e, onChange)}
               className={`${errors[caption.toLowerCase()] ? 'error' : ''}`}
               classNamePrefix="field_select"
               options={options}
