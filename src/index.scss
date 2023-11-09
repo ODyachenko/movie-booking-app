@@ -32,12 +32,14 @@ body {
   color: #fff;
 }
 
-.swiper-slide {
+.swiper-slide,
+.movie {
   max-width: 190px;
 }
 
 @media (min-width: 1024px) {
-  .swiper-slide {
+  .swiper-slide,
+  .movie {
     max-width: 230px;
   }
 }

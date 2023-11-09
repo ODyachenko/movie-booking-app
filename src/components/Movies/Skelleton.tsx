@@ -1,14 +1,16 @@
 import React, { FC } from 'react';
 import ContentLoader from 'react-content-loader';
 
-const MyLoader: FC = (props) => (
+const Skelleton: FC = (props) => (
   <ContentLoader
+    className="movies__list-item movie"
     speed={2}
     width={230}
     height={394}
     viewBox="0 0 230 394"
     backgroundColor="#32363d"
     foregroundColor="#f2f2f2"
+    style={{ marginRight: 30 }}
     {...props}
   >
     <rect x="43" y="43" rx="0" ry="0" width="1" height="0" />
@@ -18,4 +20,4 @@ const MyLoader: FC = (props) => (
   </ContentLoader>
 );
 
-export default MyLoader;
+export default Skelleton;
