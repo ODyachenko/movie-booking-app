@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { SingleValue } from 'react-select';
 import supabase from '../../config/supabaseClient';
@@ -21,6 +21,7 @@ type FormData = {
   cinema: SelectFieldOptions;
   date: SelectFieldOptions;
   time: SelectFieldOptions;
+  seats: string[];
 };
 
 export const BookingForm: FC = () => {
@@ -36,12 +37,14 @@ export const BookingForm: FC = () => {
     cinema: '',
     date: '',
     time: '',
+    name: '',
   });
   const [bookingInfo, setBookingInfo] = useState<BookingInfo[]>([]);
   const [cinema, setCinema] = useState<SelectFieldOptions[]>([]);
   const [dates, setDates] = useState<SelectFieldOptions[]>([]);
   const [time, setTime] = useState<SelectFieldOptions[]>([]);
   const [seats, setSeats] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchBookingInfo();
@@ -58,6 +61,7 @@ export const BookingForm: FC = () => {
         throw error;
       }
       setBookingInfo(data[0].bookingInfo);
+      setBooking({ ...booking, name: data[0].name });
       setCinema(data[0].bookingInfo.map((item: BookingItem) => item.option));
     } catch (error) {
       console.error(error);
@@ -70,8 +74,14 @@ export const BookingForm: FC = () => {
       date: data.date.value,
       time: data.time.value,
       cinema: data.cinema.value,
+      name: booking.name,
     };
     console.log(result);
+    const location = {
+      pathname: '/e-ticket',
+      search: `?name=${result.name}&cinema=${result.cinema}&date=${result.date}&time=${result.time}&seats=${result.seats}`,
+    };
+    navigate(location);
   };
   const onChangeCinema = (
     event: SingleValue<SelectFieldOptions>,

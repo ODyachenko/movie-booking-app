@@ -1,38 +1,41 @@
 import React, { FC } from 'react';
 import Barcode from 'react-barcode';
-import { Margin, usePDF } from 'react-to-pdf';
+import { useSearchParams } from 'react-router-dom';
+import { Margin, Resolution, usePDF } from 'react-to-pdf';
 import { Btn } from '../../UI/Btn/Btn';
 import './styles.scss';
 
 export const Ticket: FC = () => {
+  let [searchParams] = useSearchParams();
   const { toPDF, targetRef } = usePDF({
     filename: 'ticket.pdf',
-    page: { margin: Margin.MEDIUM },
+    resolution: Resolution.NORMAL,
+    page: { margin: Margin.MEDIUM, format: 'letter' },
   });
 
   return (
     <div className="e-ticket__list-item">
       <div ref={targetRef} className="e-ticket__ticket ticket">
         <div className="ticket__header">
-          <h3 className="ticket__movie">Film: Shang-Chi</h3>
+          <h3 className="ticket__movie">Film: {searchParams.get('name')}</h3>
           <span className="ticket__label">e-ticket</span>
         </div>
         <div className="ticket__content">
           <div className="ticket__info">
             <span>Date</span>
-            <strong>06/09/2021</strong>
+            <strong>{searchParams.get('date')}</strong>
           </div>
           <div className="ticket__info">
-            <span>Seat</span>
-            <strong>c4</strong>
+            <span>Seats</span>
+            <strong>{searchParams.get('seats')}</strong>
           </div>
           <div className="ticket__info">
             <span>Location</span>
-            <strong>Viva Cinema</strong>
+            <strong>{searchParams.get('cinema')}</strong>
           </div>
           <div className="ticket__info">
             <span>Time</span>
-            <strong>09:00</strong>
+            <strong>{searchParams.get('time')}</strong>
           </div>
           <div className="ticket__info">
             <span>Payment</span>

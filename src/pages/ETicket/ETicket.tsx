@@ -14,7 +14,6 @@ export const ETicket: FC = () => {
         </p>
         <div className="e-ticket__list">
           <Ticket />
-          <Ticket />
         </div>
       </div>
     </section>

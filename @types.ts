@@ -49,10 +49,10 @@ export type BookingType = {
   cinema?: string;
   date?: string;
   time?: string;
+  name?: string;
 };
 
 export type BookingInfo = {
-  [x: string]: any;
   dates: [
     {
       option: SelectFieldOptions;
