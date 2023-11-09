@@ -7,7 +7,8 @@ interface MoviesState {
   movies: ImoviesList[];
   topMovies: ImoviesList[];
   recommendedMovies: ImoviesList[];
-  isShowing: boolean;
+  upcomingMovies: ImoviesList[];
+  isShowing: number;
 }
 
 // Define the initial state using that type
@@ -15,7 +16,8 @@ const initialState: MoviesState = {
   movies: [],
   topMovies: [],
   recommendedMovies: [],
-  isShowing: true,
+  upcomingMovies: [],
+  isShowing: 0,
 };
 
 export const moviesSlice = createSlice({
@@ -33,14 +35,24 @@ export const moviesSlice = createSlice({
         (movie) => movie.type === 'recommended'
       );
     },
-    setIsShowing: (state, action: PayloadAction<boolean>) => {
+    setUpcomingMovies: (state) => {
+      state.upcomingMovies = state.movies.filter(
+        (movie) => movie.type === 'upcoming'
+      );
+    },
+    setIsShowing: (state, action: PayloadAction<number>) => {
       state.isShowing = action.payload;
     },
   },
 });
 
-export const { setMovies, setTopMovies, setRecommendedMovies, setIsShowing } =
-  moviesSlice.actions;
+export const {
+  setMovies,
+  setTopMovies,
+  setRecommendedMovies,
+  setUpcomingMovies,
+  setIsShowing,
+} = moviesSlice.actions;
 
 // export const selectCount = (state: RootState) => state.counter.value;
 

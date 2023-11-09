@@ -10,7 +10,7 @@ import { Login } from './pages/Login';
 import { NotFound } from './pages/NotFound';
 import { Register } from './pages/Register';
 import { Settings } from './pages/Settings/Settings';
-import { YourMovie } from './pages/YourMovie';
+import { YourMovie } from './pages/YourMovie/YourMovie';
 import { setIsAuth } from './redux/slices/userSlice';
 
 function App() {

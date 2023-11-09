@@ -1,16 +1,27 @@
 import React, { FC } from 'react';
-import { RecommendedMovies } from '../RecommendedMovies/RecommendedMovies';
+import { RecommendedMovies } from '../Movies/RecommendedMovies';
 import { Tabs } from '../Tabs/Tabs';
-import { TopMovies } from '../TopMovies/TopMovies';
+import { TopMovies } from '../Movies/TopMovies';
 import './styles.scss';
+import { useAppSelector } from '../../hooks/hooks';
+import { UpcomingMovies } from '../Movies/UpcomingMovies';
 
 export const Main: FC = () => {
+  const { isShowing } = useAppSelector((state) => state.movies);
+
   return (
     <main className="main block">
       <div className="container">
         <Tabs />
-        <TopMovies />
-        <RecommendedMovies />
+
+        {!!isShowing ? (
+          <UpcomingMovies />
+        ) : (
+          <>
+            <TopMovies />
+            <RecommendedMovies />
+          </>
+        )}
       </div>
     </main>
   );

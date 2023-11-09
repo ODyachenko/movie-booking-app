@@ -50,6 +50,7 @@ export type BookingType = {
   date?: string;
   time?: string;
   name?: string;
+  seats?: string[];
 };
 
 export type BookingInfo = {
@@ -68,4 +69,14 @@ export type BookingInfo = {
 
 export type BookingItem = {
   option: SelectFieldOptions;
+};
+
+export type BookedMovieType = {
+  id: number;
+  userId: string;
+  name: string;
+  date: string;
+  cinema: string;
+  time: string;
+  seats: string[];
 };

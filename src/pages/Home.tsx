@@ -6,6 +6,7 @@ import {
   setMovies,
   setRecommendedMovies,
   setTopMovies,
+  setUpcomingMovies,
 } from '../redux/slices/moviesSlice';
 
 export const Home: FC = () => {
@@ -21,6 +22,7 @@ export const Home: FC = () => {
       dispatch(setMovies(data));
       dispatch(setTopMovies());
       dispatch(setRecommendedMovies());
+      dispatch(setUpcomingMovies());
     } catch (error) {
       console.error(error);
     }

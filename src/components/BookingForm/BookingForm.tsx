@@ -68,6 +68,24 @@ export const BookingForm: FC = () => {
     }
   };
 
+  const postBooking = async (obj: BookingType) => {
+    const location = {
+      pathname: '/e-ticket',
+      search: `?name=${obj.name}&cinema=${obj.cinema}&date=${obj.date}&time=${obj.time}&seats=${obj.seats}`,
+    };
+
+    try {
+      const { error } = await supabase.from('booked movie').insert(obj);
+
+      if (error) {
+        throw error;
+      }
+      navigate(location);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const result = {
       ...data,
@@ -77,11 +95,7 @@ export const BookingForm: FC = () => {
       name: booking.name,
     };
     console.log(result);
-    const location = {
-      pathname: '/e-ticket',
-      search: `?name=${result.name}&cinema=${result.cinema}&date=${result.date}&time=${result.time}&seats=${result.seats}`,
-    };
-    navigate(location);
+    postBooking(result);
   };
   const onChangeCinema = (
     event: SingleValue<SelectFieldOptions>,

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Movies } from '../Movies/Movies';
+import { Movies } from './Movies';
 import { useAppSelector } from '../../hooks/hooks';
 
 export const TopMovies: FC = () => {

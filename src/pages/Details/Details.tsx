@@ -8,6 +8,7 @@ import { useAppSelector } from '../../hooks/hooks';
 
 export const Details: FC = () => {
   const { movies } = useAppSelector((state) => state.movies);
+  const { isAuth } = useAppSelector((state) => state.user);
   const [movie, setMovie] = useState<ImoviesList | null>(null);
   const { id } = useParams<string>();
   const navigate = useNavigate();
@@ -42,12 +43,14 @@ export const Details: FC = () => {
               <MovieTags tags={movie.tags} />
               <h2 className="details__subtitle">Synopsis</h2>
               <p className="details__text">{movie.synopsis}</p>
-              <Btn
-                className="details__btn"
-                model="primary"
-                text="Book Ticket"
-                handler={onCLickHandler}
-              />
+              {isAuth && movie.type !== 'upcoming' && (
+                <Btn
+                  className="details__btn"
+                  model="primary"
+                  text="Book Ticket"
+                  handler={onCLickHandler}
+                />
+              )}
             </div>
           </div>
         )}

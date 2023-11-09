@@ -1,0 +1,26 @@
+.booked {
+  &__title {
+    margin-bottom: 20px;
+  }
+  &__movies {
+    list-style: numeric;
+    padding-left: 20px;
+
+    &::marker {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    &-item {
+      &:not(:last-child) {
+        margin-bottom: 15px;
+      }
+
+      &::marker {
+        font-size: 16px;
+        color: #fff;
+        font-weight: 600;
+      }
+    }
+  }
+}
