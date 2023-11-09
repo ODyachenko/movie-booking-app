@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import { RecommendedMovies } from '../Movies/RecommendedMovies';
+import { useAppSelector } from '../../hooks/hooks';
 import { Tabs } from '../Tabs/Tabs';
 import { TopMovies } from '../Movies/TopMovies';
-import './styles.scss';
-import { useAppSelector } from '../../hooks/hooks';
+import { RecommendedMovies } from '../Movies/RecommendedMovies';
 import { UpcomingMovies } from '../Movies/UpcomingMovies';
+import './styles.scss';
 
 export const Main: FC = () => {
   const { isShowing } = useAppSelector((state) => state.movies);

@@ -1,36 +1,14 @@
 import React, { FC, useEffect } from 'react';
-import supabase from '../config/supabaseClient';
 import { Main } from '../components/Main/Main';
 import { useAppDispatch } from '../hooks/hooks';
-import {
-  setMovies,
-  setRecommendedMovies,
-  setTopMovies,
-  setUpcomingMovies,
-} from '../redux/slices/moviesSlice';
+import { fetchMovies } from '../redux/slices/moviesSlice';
 
 export const Home: FC = () => {
   const dispatch = useAppDispatch();
 
-  const fetchMovies = async () => {
-    try {
-      const { data, error } = await supabase.from('movies').select();
-
-      if (error) {
-        throw error;
-      }
-      dispatch(setMovies(data));
-      dispatch(setTopMovies());
-      dispatch(setRecommendedMovies());
-      dispatch(setUpcomingMovies());
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
-    fetchMovies();
-  }, []);
+    dispatch(fetchMovies());
+  }, [dispatch]);
 
   return <Main />;
 };

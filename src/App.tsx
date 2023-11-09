@@ -20,7 +20,7 @@ function App() {
     localStorage.getItem(String(process.env.REACT_APP_TOKEN))
       ? dispatch(setIsAuth(true))
       : dispatch(setIsAuth(false));
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
