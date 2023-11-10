@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import supabase from '../../config/supabaseClient';
 import { useAppDispatch } from '../../hooks/hooks';
-import { logoutUser, setIsAuth } from '../../redux/slices/userSlice';
+import { logoutUser } from '../../redux/slices/userSlice';
 
 type SettingsListItemProps = {
   icon: string;

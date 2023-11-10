@@ -16,6 +16,8 @@ import {
   BookingItem,
 } from '../../../@types';
 import './styles.scss';
+import { postBooking } from '../../redux/slices/bookingSlice';
+import { useAppDispatch } from '../../hooks/hooks';
 
 type FormData = {
   cinema: SelectFieldOptions;
@@ -45,6 +47,7 @@ export const BookingForm: FC = () => {
   const [time, setTime] = useState<SelectFieldOptions[]>([]);
   const [seats, setSeats] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     fetchBookingInfo();
@@ -69,24 +72,6 @@ export const BookingForm: FC = () => {
     }
   };
 
-  const postBooking = async (obj: BookingType) => {
-    const location = {
-      pathname: '/e-ticket',
-      search: `?name=${obj.name}&cinema=${obj.cinema}&date=${obj.date}&time=${obj.time}&seats=${obj.seats}`,
-    };
-
-    try {
-      const { error } = await supabase.from('booked movie').insert(obj);
-
-      if (error) {
-        throw error;
-      }
-      navigate(location);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const result = {
       ...data,
@@ -95,8 +80,7 @@ export const BookingForm: FC = () => {
       cinema: data.cinema.value,
       name: booking.name,
     };
-    console.log(result);
-    postBooking(result);
+    dispatch(postBooking({ ...result, navigate }));
   };
   const onChangeCinema = (
     event: SingleValue<SelectFieldOptions>,

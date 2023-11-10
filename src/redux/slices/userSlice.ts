@@ -20,19 +20,6 @@ export const logoutUser = createAsyncThunk<
   }
 });
 
-// if (confirm('Do you want to logout?')) {
-//   try {
-//     const { error } = await supabase.auth.signOut();
-
-//     if (error) {
-//       throw error;
-//     }
-//     dispatch(setIsAuth(false));
-//   } catch (error: any) {
-//     console.error(error);
-//   }
-// }
-
 // Define a type for the slice state
 interface userState {
   isAuth: boolean;
