@@ -1,49 +1,30 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import supabase from '../../config/supabaseClient';
+import { loginUser } from '../../redux/slices/userSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { Btn } from '../../UI/Btn/Btn';
+import { LoginFormData } from '../../../@types';
+
 import './styles.scss';
 import '../../UI/InputField/styles.scss';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { setIsAuth } from '../../redux/slices/userSlice';
-import { LoginFormData } from '../../../@types';
 
 export const LoginForm: FC = () => {
   const {
     handleSubmit,
     register,
-    reset,
     formState: { errors },
   } = useForm<LoginFormData>({ mode: 'onChange' });
-  const [isLoading, setIsLoading] = useState(false);
-  const { loading, error } = useAppSelector((state) => state.user);
+  const { isAuth, loading, error } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (localStorage.getItem(String(process.env.REACT_APP_TOKEN))) {
-      navigate('/');
-    }
-  }, [navigate]);
+    isAuth && navigate('/');
+  }, [isAuth, navigate]);
 
-  const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
-    try {
-      setIsLoading(true);
-      const response = await supabase.auth.signInWithPassword(data);
-
-      if (response.error) {
-        throw response.error;
-      }
-      dispatch(setIsAuth(true));
-      navigate('/');
-      reset();
-    } catch (error: any) {
-      alert(error.message);
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
+  const onSubmit: SubmitHandler<LoginFormData> = (data) => {
+    dispatch(loginUser({ data, navigate }));
   };
 
   return (
@@ -85,6 +66,7 @@ export const LoginForm: FC = () => {
         )}
       </label>
       <Btn type="submit" model="primary" text="Sign In" loading={loading} />
+      {error && <span className="field__error--primary">{error}</span>}
       <Link className="form__link" to="/register">
         Don't have an account?
       </Link>

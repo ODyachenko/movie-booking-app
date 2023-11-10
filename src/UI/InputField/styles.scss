@@ -9,6 +9,13 @@
     display: block;
     color: $primaryRed;
     padding-top: 5px;
+
+    &--primary {
+      display: block;
+      color: $primaryRed;
+      text-align: center;
+      padding: 5px 0;
+    }
   }
 
   &__caption {

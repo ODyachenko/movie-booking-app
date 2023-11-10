@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { NavigateFunction } from 'react-router-dom';
 
 export type BtnType = {
   className?: string;
@@ -85,6 +86,13 @@ export type BookedMovieType = {
 };
 
 export type LoginFormData = {
+  email: string;
+  password: string;
+};
+
+export type RegisterFormData = {
+  fullname: string;
+  avatarUrl?: string;
   email: string;
   password: string;
 };

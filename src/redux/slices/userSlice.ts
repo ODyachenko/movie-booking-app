@@ -1,8 +1,80 @@
 import { createSlice, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
+import { NavigateFunction } from 'react-router-dom';
+import supabase from '../../config/supabaseClient';
+import { v4 } from 'uuid';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../../@types';
-import supabase from '../../config/supabaseClient';
 import { LoginFormData } from '../../../@types';
+
+type LoginUserType = {
+  data: LoginFormData;
+  navigate: NavigateFunction;
+};
+
+type SignupUserType = {
+  formData: {
+    email: string;
+    password: string;
+    options: {
+      data: {
+        fullname: string;
+        avatarUrl?: string;
+      };
+    };
+  };
+  navigate: NavigateFunction;
+};
+
+type UploadAvatarType = {
+  path: string;
+};
+
+// Log in user
+export const loginUser = createAsyncThunk<
+  undefined,
+  LoginUserType,
+  { rejectValue: string }
+>('user/loginUser', async function ({ data, navigate }, { rejectWithValue }) {
+  const { error } = await supabase.auth.signInWithPassword(data);
+
+  if (error) {
+    return rejectWithValue(error.message);
+  }
+  navigate('/');
+});
+
+// Sign up user
+export const signupUser = createAsyncThunk<
+  undefined,
+  SignupUserType,
+  { rejectValue: string }
+>(
+  'user/signupUser',
+  async function ({ formData, navigate }, { rejectWithValue }) {
+    const { error } = await supabase.auth.signUp(formData);
+
+    if (error) {
+      return rejectWithValue(error.message);
+    }
+    navigate('/');
+  }
+);
+
+// Upload user avatar
+export const uploadAvatar = createAsyncThunk<
+  UploadAvatarType,
+  File,
+  { rejectValue: string }
+>('user/uploadAvatar', async function (avatarFile, { rejectWithValue }) {
+  const { data, error } = await supabase.storage
+    .from('avatars')
+    .upload(v4(), avatarFile);
+
+  if (error) {
+    return rejectWithValue(error.message);
+  }
+  return data;
+});
 
 // Log out user
 export const logoutUser = createAsyncThunk<
@@ -24,6 +96,7 @@ export const logoutUser = createAsyncThunk<
 interface userState {
   isAuth: boolean;
   authUser: User;
+  avatar: string;
   loading: boolean;
   error: string | null;
 }
@@ -36,6 +109,7 @@ const initialState: userState = {
     avatarUrl: '',
     email: '',
   },
+  avatar: `${process.env.REACT_APP_STORAGE_URI}/avatar_private.png`,
   loading: false,
   error: null,
 };
@@ -60,6 +134,30 @@ export const userSlice = createSlice({
       .addCase(logoutUser.fulfilled, (state) => {
         state.loading = false;
         state.isAuth = false;
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginUser.fulfilled, (state) => {
+        state.loading = false;
+        state.isAuth = true;
+      })
+      .addCase(signupUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(signupUser.fulfilled, (state) => {
+        state.loading = false;
+        state.isAuth = true;
+      })
+      .addCase(uploadAvatar.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(uploadAvatar.fulfilled, (state, action) => {
+        state.loading = false;
+        state.avatar = `${process.env.REACT_APP_STORAGE_URI}/${action.payload.path}`;
       })
       .addMatcher(isError, (state, action: PayloadAction<string>) => {
         state.error = action.payload;

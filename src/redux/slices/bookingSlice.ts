@@ -52,24 +52,6 @@ export const fetchBookingInfo = createAsyncThunk<
   return data;
 });
 
-// const fetchBookingInfo = async () => {
-//     try {
-//       const { data, error } = await supabase
-//         .from('booking')
-//         .select()
-//         .eq('movieId', id);
-
-//       if (error) {
-//         throw error;
-//       }
-//       setBookingInfo(data[0].bookingInfo);
-//       setBooking({ ...booking, name: data[0].name });
-//       setCinema(data[0].bookingInfo.map((item: BookingItem) => item.option));
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
 // Define a type for the slice state
 interface bookingState {
   booking: BookingType;

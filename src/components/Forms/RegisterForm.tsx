@@ -1,42 +1,31 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import supabase from '../../config/supabaseClient';
-import { v4 } from 'uuid';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { signupUser, uploadAvatar } from '../../redux/slices/userSlice';
 import { Btn } from '../../UI/Btn/Btn';
+import { RegisterFormData } from '../../../@types';
+
 import './styles.scss';
 import '../../UI/InputField/styles.scss';
-import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks/hooks';
-import { setIsAuth } from '../../redux/slices/userSlice';
-
-type FormData = {
-  email: string;
-  password: string;
-  fullname: string;
-  avatarUrl?: string;
-};
-
-const initialState = `${process.env.REACT_APP_STORAGE_URI}/avatar_private.png`;
 
 export const RegisterForm: FC = () => {
   const {
     handleSubmit,
     register,
-    reset,
     formState: { errors },
-  } = useForm<FormData>({ mode: 'onChange' });
-  const [avatar, setAvatar] = useState(initialState);
-  const [isLoading, setIsLoading] = useState(false);
+  } = useForm<RegisterFormData>({ mode: 'onChange' });
+  const { loading, isAuth, avatar, error } = useAppSelector(
+    (state) => state.user
+  );
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (localStorage.getItem(String(process.env.REACT_APP_TOKEN))) {
-      navigate('/');
-    }
-  }, []);
+    isAuth && navigate('/');
+  }, [isAuth, navigate]);
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  const onSubmit: SubmitHandler<RegisterFormData> = (data) => {
     const formData = {
       email: data.email,
       password: data.password,
@@ -47,41 +36,12 @@ export const RegisterForm: FC = () => {
         },
       },
     };
-
-    try {
-      setIsLoading(true);
-      const response = await supabase.auth.signUp(formData);
-
-      if (response.error) {
-        throw response.error;
-      }
-      dispatch(setIsAuth(true));
-      navigate('/');
-
-      setAvatar(initialState);
-      reset();
-    } catch (error: any) {
-      alert(error.message);
-      console.error(error.message);
-    } finally {
-      setIsLoading(false);
-    }
+    dispatch(signupUser({ formData, navigate }));
   };
 
-  const handleChangeFile = async (event: any) => {
-    try {
-      const avatarFile = event.target.files[0];
-      const { data, error } = await supabase.storage
-        .from('avatars')
-        .upload(v4(), avatarFile);
-
-      if (error) {
-        throw error;
-      }
-      setAvatar(`${process.env.REACT_APP_STORAGE_URI}/${data.path}`);
-    } catch (error: any) {
-      console.error(error);
-    }
+  const handleChangeFile = (event: any) => {
+    const avatarFile = event.target.files[0];
+    dispatch(uploadAvatar(avatarFile));
   };
 
   return (
@@ -149,7 +109,8 @@ export const RegisterForm: FC = () => {
           <span className="field__error">{errors.password.message}</span>
         )}
       </label>
-      <Btn type="submit" model="primary" text="Sign Up" loading={isLoading} />
+      {error && <span className="field__error--primary">{error}</span>}
+      <Btn type="submit" model="primary" text="Sign Up" loading={loading} />
     </form>
   );
 };
