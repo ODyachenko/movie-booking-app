@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import supabase from '../../config/supabaseClient';
 import { useAppDispatch } from '../../hooks/hooks';
-import { setIsAuth } from '../../redux/slices/userSlice';
+import { logoutUser, setIsAuth } from '../../redux/slices/userSlice';
 
 type SettingsListItemProps = {
   icon: string;
@@ -18,7 +18,7 @@ export const SettingsListItem: FC<SettingsListItemProps> = ({
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onClickHandler = async (type: string) => {
+  const onClickHandler = (type: string) => {
     switch (type) {
       case 'data':
         console.log('data');
@@ -33,19 +33,7 @@ export const SettingsListItem: FC<SettingsListItemProps> = ({
         console.log('remove');
         break;
       case 'logout':
-        // eslint-disable-next-line no-restricted-globals
-        if (confirm('Do you want to logout?')) {
-          try {
-            const { error } = await supabase.auth.signOut();
-
-            if (error) {
-              throw error;
-            }
-            dispatch(setIsAuth(false));
-          } catch (error: any) {
-            console.error(error);
-          }
-        }
+        dispatch(logoutUser());
         break;
 
       default:

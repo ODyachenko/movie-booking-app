@@ -4,19 +4,34 @@ import { User } from '../../../@types';
 import supabase from '../../config/supabaseClient';
 import { LoginFormData } from '../../../@types';
 
-// Fetch movies
-// export const signInUser = createAsyncThunk<
-//   undefined,
-//   LoginFormData,
-//   { rejectValue: string }
-// >('user/signInUser', async function (data, { rejectWithValue }) {
-//   const { error } = await supabase.auth.signInWithPassword(data);
+// Log out user
+export const logoutUser = createAsyncThunk<
+  undefined,
+  undefined,
+  { rejectValue: string }
+>('user/logoutUser', async function (_, { rejectWithValue }) {
+  // eslint-disable-next-line no-restricted-globals
+  if (confirm('Do you want to logout?')) {
+    const { error } = await supabase.auth.signOut();
 
-//   if (error) {
-//     return rejectWithValue(error.message);
+    if (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+});
+
+// if (confirm('Do you want to logout?')) {
+//   try {
+//     const { error } = await supabase.auth.signOut();
+
+//     if (error) {
+//       throw error;
+//     }
+//     dispatch(setIsAuth(false));
+//   } catch (error: any) {
+//     console.error(error);
 //   }
-//   return;
-// });
+// }
 
 // Define a type for the slice state
 interface userState {
@@ -49,21 +64,21 @@ export const userSlice = createSlice({
       state.authUser = action.payload;
     },
   },
-  // extraReducers: (builder) => {
-  //   builder
-  //     .addCase(signInUser.pending, (state) => {
-  //       state.loading = true;
-  //       state.error = null;
-  //     })
-  //     .addCase(signInUser.fulfilled, (state, action) => {
-  //       state.loading = false;
-  //       state.isAuth = true;
-  //     })
-  //     .addMatcher(isError, (state, action: PayloadAction<string>) => {
-  //       state.error = action.payload;
-  //       state.loading = false;
-  //     });
-  // },
+  extraReducers: (builder) => {
+    builder
+      .addCase(logoutUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.loading = false;
+        state.isAuth = false;
+      })
+      .addMatcher(isError, (state, action: PayloadAction<string>) => {
+        state.error = action.payload;
+        state.loading = false;
+      });
+  },
 });
 
 function isError(action: AnyAction) {

@@ -1,5 +1,4 @@
 import React from 'react';
-import supabase from '../../config/supabaseClient';
 import { SettingsListItem } from './SettingsListItem';
 
 const categoryList = [
