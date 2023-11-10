@@ -11,8 +11,11 @@ export type BtnType = {
 
 export type FieldType = {
   text: string;
-  type: 'text' | 'email' | 'password' | 'date' | 'time';
+  type: 'text' | 'email' | 'password' | 'date' | 'time' | 'number';
+  value?: string;
   handler?: () => void;
+  className?: string;
+  disabled?: boolean;
 };
 
 export type NavLinksType = {
@@ -79,4 +82,9 @@ export type BookedMovieType = {
   cinema: string;
   time: string;
   seats: string[];
+};
+
+export type LoginFormData = {
+  email: string;
+  password: string;
 };

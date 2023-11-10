@@ -1,0 +1,71 @@
+@import '../../assets/scss/variables.scss';
+
+.card {
+  position: relative;
+  max-width: 315px;
+  color: #fff;
+  background: $primaryBlue;
+  border-radius: 20px;
+
+  &::after {
+    content: '';
+    width: 245px;
+    height: 177px;
+    background: url('../../assets/img/card_pattern.svg') no-repeat
+      center/contain;
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 15px 20px;
+    margin-bottom: 40px;
+  }
+
+  &__balance {
+    &-caption {
+      display: block;
+
+      color: rgba(255, 255, 255, 0.8);
+      text-align: right;
+      margin-bottom: 5px;
+    }
+    &-amount {
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+  &__footer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #007cd7;
+    border-radius: 0 0 20px 20px;
+    z-index: 1;
+
+    padding: 15px;
+
+    &-caption {
+      display: block;
+
+      color: rgba(255, 255, 255, 0.8);
+      text-align: right;
+      margin-bottom: 5px;
+    }
+    &-name {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    &-number {
+      letter-spacing: 1.2px;
+    }
+  }
+}

@@ -48,6 +48,7 @@ export const BookingForm: FC = () => {
 
   useEffect(() => {
     fetchBookingInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const fetchBookingInfo = async () => {

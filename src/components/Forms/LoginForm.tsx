@@ -5,13 +5,9 @@ import supabase from '../../config/supabaseClient';
 import { Btn } from '../../UI/Btn/Btn';
 import './styles.scss';
 import '../../UI/InputField/styles.scss';
-import { useAppDispatch } from '../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { setIsAuth } from '../../redux/slices/userSlice';
-
-type FormData = {
-  email: string;
-  password: string;
-};
+import { LoginFormData } from '../../../@types';
 
 export const LoginForm: FC = () => {
   const {
@@ -19,8 +15,9 @@ export const LoginForm: FC = () => {
     register,
     reset,
     formState: { errors },
-  } = useForm<FormData>({ mode: 'onChange' });
+  } = useForm<LoginFormData>({ mode: 'onChange' });
   const [isLoading, setIsLoading] = useState(false);
+  const { loading, error } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -28,9 +25,9 @@ export const LoginForm: FC = () => {
     if (localStorage.getItem(String(process.env.REACT_APP_TOKEN))) {
       navigate('/');
     }
-  }, []);
+  }, [navigate]);
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
       setIsLoading(true);
       const response = await supabase.auth.signInWithPassword(data);
@@ -87,7 +84,7 @@ export const LoginForm: FC = () => {
           <span className="field__error">{errors.password.message}</span>
         )}
       </label>
-      <Btn type="submit" model="primary" text="Sign In" loading={isLoading} />
+      <Btn type="submit" model="primary" text="Sign In" loading={loading} />
       <Link className="form__link" to="/register">
         Don't have an account?
       </Link>

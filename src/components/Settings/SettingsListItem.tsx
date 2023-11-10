@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import supabase from '../../config/supabaseClient';
 import { useAppDispatch } from '../../hooks/hooks';
 import { setIsAuth } from '../../redux/slices/userSlice';
@@ -15,11 +16,15 @@ export const SettingsListItem: FC<SettingsListItemProps> = ({
   type,
 }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onClickHandler = async (type: string) => {
     switch (type) {
       case 'data':
         console.log('data');
+        break;
+      case 'payment':
+        navigate('/paymentInfo');
         break;
       case 'ticket':
         console.log('ticket');

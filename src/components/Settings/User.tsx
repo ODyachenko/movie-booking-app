@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { useAppSelector } from '../../hooks/hooks';
+import defaultAvatar from '../../assets/img/avatar_private.png';
 
 export const User: FC = () => {
   const { authUser } = useAppSelector((state) => state.user);
@@ -8,7 +9,7 @@ export const User: FC = () => {
     <div className="settings__user user">
       <img
         className="user__avatar"
-        src={authUser.avatarUrl}
+        src={authUser ? authUser.avatarUrl : defaultAvatar}
         alt={authUser.fullname}
       />
       <div className="user__info">

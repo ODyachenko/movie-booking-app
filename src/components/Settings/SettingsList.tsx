@@ -10,6 +10,12 @@ const categoryList = [
     type: 'data',
   },
   {
+    id: 2,
+    icon: require('../../assets/img/category2.png'),
+    text: 'Email & Payment',
+    type: 'payment',
+  },
+  {
     id: 5,
     icon: require('../../assets/img/category5.png'),
     text: 'Your Ticket',

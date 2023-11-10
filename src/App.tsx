@@ -1,19 +1,21 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Nav } from './components/Nav/Nav';
-import { useAppDispatch } from './hooks/hooks';
+import { useAppDispatch, useAppSelector } from './hooks/hooks';
 import { Booking } from './pages/Booking';
 import { Details } from './pages/Details/Details';
 import { ETicket } from './pages/ETicket/ETicket';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { NotFound } from './pages/NotFound';
+import { PaymentInfo } from './pages/PaymentInfo/PaymentInfo';
 import { Register } from './pages/Register';
 import { Settings } from './pages/Settings/Settings';
 import { YourMovie } from './pages/YourMovie/YourMovie';
-import { setIsAuth } from './redux/slices/userSlice';
+import { setAuthUser, setIsAuth } from './redux/slices/userSlice';
 
 function App() {
+  const { isAuth } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -21,6 +23,22 @@ function App() {
       ? dispatch(setIsAuth(true))
       : dispatch(setIsAuth(false));
   }, [dispatch]);
+
+  useEffect(() => {
+    const json = localStorage.getItem(String(process.env.REACT_APP_TOKEN));
+
+    if (json) {
+      const user = JSON.parse(json);
+      dispatch(
+        setAuthUser({
+          email: user.user.email,
+          fullname: user.user.user_metadata.fullname,
+          avatarUrl: user.user.user_metadata.avatarUrl,
+        })
+      );
+      return;
+    }
+  }, [isAuth, dispatch]);
 
   return (
     <>
@@ -35,6 +53,7 @@ function App() {
           <Route path="/your-movie" element={<YourMovie />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/e-ticket" element={<ETicket />} />
+          <Route path="/paymentInfo" element={<PaymentInfo />} />
           <Route path="/not-found" element={<NotFound />} />
         </Routes>
       </Router>
