@@ -2,22 +2,20 @@ import React, { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { SingleValue } from 'react-select';
-import supabase from '../../config/supabaseClient';
 import { SelectField } from '../../UI/SelectField/SelectField';
 import { Seats } from './Seats';
 import { Btn } from '../../UI/Btn/Btn';
 import { getAvailableDates } from '../../utils/getAvailableDates';
 import { getAvailableTime } from '../../utils/getAvailableTime';
 import { getAvailableSeats } from '../../utils/getAvailableSeats';
-import {
-  BookingType,
-  BookingInfo,
-  SelectFieldOptions,
-  BookingItem,
-} from '../../../@types';
+import { SelectFieldOptions } from '../../../@types';
 import './styles.scss';
-import { postBooking } from '../../redux/slices/bookingSlice';
-import { useAppDispatch } from '../../hooks/hooks';
+import {
+  fetchBookingInfo,
+  postBooking,
+  setBooking,
+} from '../../redux/slices/bookingSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 type FormData = {
   cinema: SelectFieldOptions;
@@ -34,43 +32,19 @@ export const BookingForm: FC = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const { id } = useParams<string>();
-  const [booking, setBooking] = useState<BookingType>({
-    cinema: '',
-    date: '',
-    time: '',
-    name: '',
-  });
-  const [bookingInfo, setBookingInfo] = useState<BookingInfo[]>([]);
-  const [cinema, setCinema] = useState<SelectFieldOptions[]>([]);
+  const { booking, bookingInfo, cinema } = useAppSelector(
+    (state) => state.booking
+  );
   const [dates, setDates] = useState<SelectFieldOptions[]>([]);
   const [time, setTime] = useState<SelectFieldOptions[]>([]);
   const [seats, setSeats] = useState([]);
+  const { id } = useParams<string>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    fetchBookingInfo();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-
-  const fetchBookingInfo = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('booking')
-        .select()
-        .eq('movieId', id);
-
-      if (error) {
-        throw error;
-      }
-      setBookingInfo(data[0].bookingInfo);
-      setBooking({ ...booking, name: data[0].name });
-      setCinema(data[0].bookingInfo.map((item: BookingItem) => item.option));
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    dispatch(fetchBookingInfo(id));
+  }, [id, dispatch]);
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const result = {
@@ -87,7 +61,7 @@ export const BookingForm: FC = () => {
     callback: (event: SingleValue<SelectFieldOptions>) => void
   ) => {
     callback(event);
-    setBooking({ ...booking, cinema: event?.value });
+    dispatch(setBooking({ ...booking, cinema: event?.value }));
     setDates(getAvailableDates(bookingInfo, event));
   };
   const onChangeDates = (
@@ -95,7 +69,7 @@ export const BookingForm: FC = () => {
     callback: (event: SingleValue<SelectFieldOptions>) => void
   ) => {
     callback(event);
-    setBooking({ ...booking, date: event?.value });
+    dispatch(setBooking({ ...booking, date: event?.value }));
     setTime(getAvailableTime(bookingInfo, event, booking.cinema));
   };
 
@@ -104,7 +78,7 @@ export const BookingForm: FC = () => {
     callback: (event: SingleValue<SelectFieldOptions>) => void
   ) => {
     callback(event);
-    setBooking({ ...booking, time: event?.value });
+    dispatch(setBooking({ ...booking, time: event?.value }));
     setSeats(
       getAvailableSeats(bookingInfo, event, booking.cinema, booking.date)
     );

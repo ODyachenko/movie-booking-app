@@ -2,6 +2,12 @@ import { createSlice, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { NavigateFunction } from 'react-router-dom';
 import supabase from '../../config/supabaseClient';
+import {
+  BookingInfo,
+  SelectFieldOptions,
+  BookingItem,
+  BookingType,
+} from '../../../@types';
 
 type postBookingType = {
   cinema: string;
@@ -30,14 +36,59 @@ export const postBooking = createAsyncThunk<
   obj.navigate(location);
 });
 
+export const fetchBookingInfo = createAsyncThunk<
+  any,
+  string | undefined,
+  { rejectValue: string }
+>('booking/fetchBookingInfo', async function (id, { rejectWithValue }) {
+  const { data, error } = await supabase
+    .from('booking')
+    .select()
+    .eq('movieId', id);
+
+  if (error) {
+    return rejectWithValue(error.message);
+  }
+  return data;
+});
+
+// const fetchBookingInfo = async () => {
+//     try {
+//       const { data, error } = await supabase
+//         .from('booking')
+//         .select()
+//         .eq('movieId', id);
+
+//       if (error) {
+//         throw error;
+//       }
+//       setBookingInfo(data[0].bookingInfo);
+//       setBooking({ ...booking, name: data[0].name });
+//       setCinema(data[0].bookingInfo.map((item: BookingItem) => item.option));
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
+
 // Define a type for the slice state
 interface bookingState {
+  booking: BookingType;
+  bookingInfo: BookingInfo[];
+  cinema: SelectFieldOptions[];
   loading: boolean;
   error: string | null;
 }
 
 // Define the initial state using that type
 const initialState: bookingState = {
+  booking: {
+    cinema: '',
+    date: '',
+    time: '',
+    name: '',
+  },
+  bookingInfo: [],
+  cinema: [],
   loading: true,
   error: null,
 };
@@ -46,9 +97,9 @@ export const bookingSlice = createSlice({
   name: 'booking',
   initialState,
   reducers: {
-    // setIsShowing: (state, action: PayloadAction<number>) => {
-    //   state.isShowing = action.payload;
-    // },
+    setBooking: (state, action: PayloadAction<BookingType>) => {
+      state.booking = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -58,6 +109,18 @@ export const bookingSlice = createSlice({
       })
       .addCase(postBooking.fulfilled, (state) => {
         state.loading = false;
+      })
+      .addCase(fetchBookingInfo.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchBookingInfo.fulfilled, (state, action) => {
+        state.loading = false;
+        state.booking = { ...state.booking, name: action.payload[0].name };
+        state.bookingInfo = action.payload[0].bookingInfo;
+        state.cinema = action.payload[0].bookingInfo.map(
+          (item: BookingItem) => item.option
+        );
       })
       .addMatcher(isError, (state, action: PayloadAction<string>) => {
         state.error = action.payload;
@@ -70,6 +133,6 @@ function isError(action: AnyAction) {
   return action.type.endsWith('rejected');
 }
 
-// export const {} = bookingSlice.actions;
+export const { setBooking } = bookingSlice.actions;
 
 export default bookingSlice.reducer;
