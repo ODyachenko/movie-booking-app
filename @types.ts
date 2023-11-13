@@ -1,6 +1,3 @@
-import { ReactNode } from 'react';
-import { NavigateFunction } from 'react-router-dom';
-
 export type BtnType = {
   className?: string;
   text: string;
@@ -17,13 +14,6 @@ export type FieldType = {
   handler?: () => void;
   className?: string;
   disabled?: boolean;
-};
-
-export type NavLinksType = {
-  id: number;
-  text: string;
-  path: string;
-  icon: ReactNode;
 };
 
 export interface ImoviesList {
@@ -50,6 +40,7 @@ export type User = {
 };
 
 export type BookingType = {
+  id?: number;
   cinema?: string;
   date?: string;
   time?: string;
@@ -73,16 +64,6 @@ export type BookingInfo = {
 
 export type BookingItem = {
   option: SelectFieldOptions;
-};
-
-export type BookedMovieType = {
-  id: number;
-  userId: string;
-  name: string;
-  date: string;
-  cinema: string;
-  time: string;
-  seats: string[];
 };
 
 export type LoginFormData = {

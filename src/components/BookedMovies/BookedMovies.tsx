@@ -1,15 +1,17 @@
 import React, { FC, useState, useEffect } from 'react';
-import supabase from '../../config/supabaseClient';
 import { BookedMovie } from './BookedMovie';
-import { BookedMovieType } from '../../../@types';
+import { BookingType } from '../../../@types';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { fetchBookedMovies } from '../../redux/slices/bookingSlice';
 
 export const BookedMovies: FC = () => {
-  const [bookedMovie, setBookedMovie] = useState<any>([]);
+  const { bookedMovies } = useAppSelector((state) => state.booking);
   const [authUserId, setAuthUserId] = useState<string>('');
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    authUserId && fetchBookedMovie();
-  }, [authUserId]);
+    authUserId && dispatch(fetchBookedMovies(authUserId));
+  }, [authUserId, dispatch]);
 
   useEffect(() => {
     const json = localStorage.getItem(String(process.env.REACT_APP_TOKEN));
@@ -20,25 +22,9 @@ export const BookedMovies: FC = () => {
     }
   }, []);
 
-  const fetchBookedMovie = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('booked movie')
-        .select()
-        .eq('userId', authUserId);
-
-      if (error) {
-        throw error;
-      }
-      setBookedMovie(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <ol className="booked__movies">
-      {bookedMovie.map((movie: BookedMovieType) => (
+      {bookedMovies.map((movie: BookingType) => (
         <BookedMovie key={movie.id} {...movie} />
       ))}
     </ol>

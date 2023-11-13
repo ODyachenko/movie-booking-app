@@ -36,6 +36,7 @@ export const postBooking = createAsyncThunk<
   obj.navigate(location);
 });
 
+// Fetch Booking Info
 export const fetchBookingInfo = createAsyncThunk<
   any,
   string | undefined,
@@ -52,11 +53,45 @@ export const fetchBookingInfo = createAsyncThunk<
   return data;
 });
 
+// Fetch Booked Movies
+export const fetchBookedMovies = createAsyncThunk<
+  any,
+  string | undefined,
+  { rejectValue: string }
+>(
+  'booking/fetchBookedMovies',
+  async function (authUserId, { rejectWithValue }) {
+    const { data, error } = await supabase
+      .from('booked movie')
+      .select()
+      .eq('userId', authUserId);
+
+    if (error) {
+      return rejectWithValue(error.message);
+    }
+    return data;
+  }
+);
+
+// Delete Booking
+export const deleteBooking = createAsyncThunk<
+  any,
+  number | undefined,
+  { rejectValue: string }
+>('booking/deleteBooking', async function (id, { rejectWithValue }) {
+  const { error } = await supabase.from('booked movie').delete().eq('id', id);
+
+  if (error) {
+    return rejectWithValue(error.message);
+  }
+});
+
 // Define a type for the slice state
 interface bookingState {
   booking: BookingType;
   bookingInfo: BookingInfo[];
   cinema: SelectFieldOptions[];
+  bookedMovies: BookingType[] | [];
   loading: boolean;
   error: string | null;
 }
@@ -71,6 +106,7 @@ const initialState: bookingState = {
   },
   bookingInfo: [],
   cinema: [],
+  bookedMovies: [],
   loading: true,
   error: null,
 };
@@ -92,6 +128,13 @@ export const bookingSlice = createSlice({
       .addCase(postBooking.fulfilled, (state) => {
         state.loading = false;
       })
+      .addCase(deleteBooking.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteBooking.fulfilled, (state) => {
+        state.loading = false;
+      })
       .addCase(fetchBookingInfo.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -103,6 +146,14 @@ export const bookingSlice = createSlice({
         state.cinema = action.payload[0].bookingInfo.map(
           (item: BookingItem) => item.option
         );
+      })
+      .addCase(fetchBookedMovies.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchBookedMovies.fulfilled, (state, action) => {
+        state.loading = false;
+        state.bookedMovies = action.payload;
       })
       .addMatcher(isError, (state, action: PayloadAction<string>) => {
         state.error = action.payload;
