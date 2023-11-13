@@ -12,7 +12,7 @@ type LoginUserType = {
 };
 
 type SignupUserType = {
-  formData: {
+  createFormData: {
     email: string;
     password: string;
     options: {
@@ -20,6 +20,17 @@ type SignupUserType = {
         fullname: string;
         avatarUrl?: string;
       };
+    };
+  };
+  navigate: NavigateFunction;
+};
+type UpdateUserType = {
+  updateFormData: {
+    email: string;
+    password: string;
+    data: {
+      fullname: string;
+      avatarUrl?: string;
     };
   };
   navigate: NavigateFunction;
@@ -50,8 +61,8 @@ export const signupUser = createAsyncThunk<
   { rejectValue: string }
 >(
   'user/signupUser',
-  async function ({ formData, navigate }, { rejectWithValue }) {
-    const { error } = await supabase.auth.signUp(formData);
+  async function ({ createFormData, navigate }, { rejectWithValue }) {
+    const { error } = await supabase.auth.signUp(createFormData);
 
     if (error) {
       return rejectWithValue(error.message);
@@ -82,15 +93,29 @@ export const logoutUser = createAsyncThunk<
   undefined,
   { rejectValue: string }
 >('user/logoutUser', async function (_, { rejectWithValue }) {
-  // eslint-disable-next-line no-restricted-globals
-  if (confirm('Do you want to logout?')) {
-    const { error } = await supabase.auth.signOut();
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    return rejectWithValue(error.message);
+  }
+});
+
+// Update user data
+export const updateUserData = createAsyncThunk<
+  undefined,
+  UpdateUserType,
+  { rejectValue: string }
+>(
+  'user/updateUserData',
+  async function ({ updateFormData, navigate }, { rejectWithValue }) {
+    const { error } = await supabase.auth.updateUser(updateFormData);
 
     if (error) {
       return rejectWithValue(error.message);
     }
+    navigate('/settings');
   }
-});
+);
 
 // Define a type for the slice state
 interface userState {
@@ -150,6 +175,14 @@ export const userSlice = createSlice({
       .addCase(signupUser.fulfilled, (state) => {
         state.loading = false;
         state.isAuth = true;
+      })
+      .addCase(updateUserData.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserData.fulfilled, (state) => {
+        state.loading = false;
+        state.isAuth = false;
       })
       .addCase(uploadAvatar.pending, (state) => {
         state.loading = true;

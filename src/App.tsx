@@ -9,6 +9,7 @@ import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { NotFound } from './pages/NotFound';
 import { PaymentInfo } from './pages/PaymentInfo/PaymentInfo';
+import { PersonalData } from './pages/PersonalData/PersonalData';
 import { Register } from './pages/Register';
 import { Settings } from './pages/Settings/Settings';
 import { YourMovie } from './pages/YourMovie/YourMovie';
@@ -22,7 +23,7 @@ function App() {
     localStorage.getItem(String(process.env.REACT_APP_TOKEN))
       ? dispatch(setIsAuth(true))
       : dispatch(setIsAuth(false));
-  }, [dispatch]);
+  }, [dispatch, isAuth]);
 
   useEffect(() => {
     const json = localStorage.getItem(String(process.env.REACT_APP_TOKEN));
@@ -54,6 +55,7 @@ function App() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/e-ticket" element={<ETicket />} />
           <Route path="/paymentInfo" element={<PaymentInfo />} />
+          <Route path="/personal-data" element={<PersonalData />} />
           <Route path="/not-found" element={<NotFound />} />
         </Routes>
       </Router>

@@ -20,7 +20,7 @@ export const SettingsListItem: FC<SettingsListItemProps> = ({
   const onClickHandler = (type: string) => {
     switch (type) {
       case 'data':
-        console.log('data');
+        navigate('/personal-data');
         break;
       case 'payment':
         navigate('/paymentInfo');

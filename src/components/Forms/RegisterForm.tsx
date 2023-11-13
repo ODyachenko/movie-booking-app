@@ -1,32 +1,43 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { signupUser, uploadAvatar } from '../../redux/slices/userSlice';
+import {
+  updateUserData,
+  signupUser,
+  uploadAvatar,
+} from '../../redux/slices/userSlice';
 import { Btn } from '../../UI/Btn/Btn';
 import { RegisterFormData } from '../../../@types';
 
 import './styles.scss';
 import '../../UI/InputField/styles.scss';
 
-export const RegisterForm: FC = () => {
+type RegisterFormProps = {
+  caption: string;
+  isRegister: boolean;
+};
+
+export const RegisterForm: FC<RegisterFormProps> = ({
+  caption,
+  isRegister,
+}) => {
+  const { loading, avatar, error, authUser } = useAppSelector(
+    (state) => state.user
+  );
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<RegisterFormData>({ mode: 'onChange' });
-  const { loading, isAuth, avatar, error } = useAppSelector(
-    (state) => state.user
-  );
+  } = useForm<RegisterFormData>({
+    mode: 'onChange',
+    defaultValues: { ...authUser },
+  });
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    isAuth && navigate('/');
-  }, [isAuth, navigate]);
-
   const onSubmit: SubmitHandler<RegisterFormData> = (data) => {
-    const formData = {
+    const createFormData = {
       email: data.email,
       password: data.password,
       options: {
@@ -36,7 +47,19 @@ export const RegisterForm: FC = () => {
         },
       },
     };
-    dispatch(signupUser({ formData, navigate }));
+
+    const updateFormData = {
+      email: data.email,
+      password: data.password,
+      data: {
+        fullname: data.fullname,
+        avatarUrl: avatar,
+      },
+    };
+
+    isRegister
+      ? dispatch(signupUser({ createFormData, navigate }))
+      : dispatch(updateUserData({ updateFormData, navigate }));
   };
 
   const handleChangeFile = (event: any) => {
@@ -46,11 +69,11 @@ export const RegisterForm: FC = () => {
 
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
-      <h1 className="form__title title">Sign Up</h1>
+      <h1 className="form__title title">{caption}</h1>
       <label className="form__avatar">
         <img
           className="form__avatar--img"
-          src={avatar}
+          src={authUser.avatarUrl ? authUser.avatarUrl : avatar}
           alt="User avatar"
           height={100}
           width={100}
@@ -110,7 +133,12 @@ export const RegisterForm: FC = () => {
         )}
       </label>
       {error && <span className="field__error--primary">{error}</span>}
-      <Btn type="submit" model="primary" text="Sign Up" loading={loading} />
+      <Btn
+        type="submit"
+        model="primary"
+        text={isRegister ? 'Sign Up' : 'Edit'}
+        loading={loading}
+      />
     </form>
   );
 };
