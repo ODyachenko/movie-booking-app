@@ -1,11 +1,11 @@
-import React, { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { loginUser } from '../../redux/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { useCheckIsAuth } from '../../hooks/useCheckAuth';
 import { Btn } from '../../UI/Btn/Btn';
 import { LoginFormData } from '../../../@types';
-
 import './styles.scss';
 import '../../UI/InputField/styles.scss';
 
@@ -15,13 +15,10 @@ export const LoginForm: FC = () => {
     register,
     formState: { errors },
   } = useForm<LoginFormData>({ mode: 'onChange' });
-  const { isAuth, loading, error } = useAppSelector((state) => state.user);
+  const { loading, error } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    isAuth && navigate('/');
-  }, [isAuth, navigate]);
+  useCheckIsAuth();
 
   const onSubmit: SubmitHandler<LoginFormData> = (data) => {
     dispatch(loginUser({ data, navigate }));

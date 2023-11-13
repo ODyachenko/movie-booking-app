@@ -1,19 +1,10 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/hooks';
 import { logoutUser } from '../../redux/slices/userSlice';
+import { CategoryList } from '../../../@types';
 
-type SettingsListItemProps = {
-  icon: string;
-  text: string;
-  type: string;
-};
-
-export const SettingsListItem: FC<SettingsListItemProps> = ({
-  icon,
-  text,
-  type,
-}) => {
+export const SettingsListItem: FC<CategoryList> = ({ icon, text, type }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

@@ -1,15 +1,15 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import Barcode from 'react-barcode';
 import { Margin, Resolution, usePDF } from 'react-to-pdf';
 import { Btn } from '../../UI/Btn/Btn';
 import './styles.scss';
 
 type TicketProps = {
-  name: string | null;
-  cinema: string | null;
-  date: string | null;
-  time: string | null;
-  seats: string | null;
+  name?: string | null;
+  cinema?: string | null;
+  date?: string | null;
+  time?: string | null;
+  seats?: string | null;
 };
 
 export const Ticket: FC<any> = ({ name, cinema, date, time, seats }) => {

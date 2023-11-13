@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Card } from '../../components/PaymentCard/Card';
 import { useAppSelector } from '../../hooks/hooks';
 import { PaymentDetails } from './PaymentDetails';

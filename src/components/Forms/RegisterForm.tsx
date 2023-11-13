@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { ChangeEvent, FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
@@ -9,7 +9,6 @@ import {
 } from '../../redux/slices/userSlice';
 import { Btn } from '../../UI/Btn/Btn';
 import { RegisterFormData } from '../../../@types';
-
 import './styles.scss';
 import '../../UI/InputField/styles.scss';
 

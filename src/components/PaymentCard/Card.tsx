@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import cardIco from '../../assets/img/mastercard.png';
 import './styles.scss';
 

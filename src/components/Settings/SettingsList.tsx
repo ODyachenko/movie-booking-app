@@ -1,7 +1,7 @@
-import React from 'react';
 import { SettingsListItem } from './SettingsListItem';
+import { CategoryList } from '../../../@types';
 
-const categoryList = [
+const categoryList: CategoryList[] = [
   {
     id: 1,
     icon: require('../../assets/img/category1.png'),

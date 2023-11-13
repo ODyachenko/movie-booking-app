@@ -1,21 +1,21 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { SingleValue } from 'react-select';
 import { SelectField } from '../../UI/SelectField/SelectField';
 import { Seats } from './Seats';
 import { Btn } from '../../UI/Btn/Btn';
-import { getAvailableDates } from '../../utils/getAvailableDates';
-import { getAvailableTime } from '../../utils/getAvailableTime';
-import { getAvailableSeats } from '../../utils/getAvailableSeats';
-import { SelectFieldOptions } from '../../../@types';
-import './styles.scss';
 import {
   fetchBookingInfo,
   postBooking,
   setBooking,
 } from '../../redux/slices/bookingSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { getAvailableDates } from '../../utils/getAvailableDates';
+import { getAvailableTime } from '../../utils/getAvailableTime';
+import { getAvailableSeats } from '../../utils/getAvailableSeats';
+import { SelectFieldOptions } from '../../../@types';
+import './styles.scss';
 
 type FormData = {
   cinema: SelectFieldOptions;

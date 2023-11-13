@@ -78,3 +78,9 @@ export type RegisterFormData = {
   email: string;
   password: string;
 };
+export type CategoryList = {
+  id: number;
+  icon: string;
+  text: string;
+  type: string;
+};

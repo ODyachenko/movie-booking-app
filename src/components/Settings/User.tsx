@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useAppSelector } from '../../hooks/hooks';
 import defaultAvatar from '../../assets/img/avatar_private.png';
 

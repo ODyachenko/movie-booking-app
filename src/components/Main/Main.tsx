@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useAppSelector } from '../../hooks/hooks';
 import { Tabs } from '../Tabs/Tabs';
 import { TopMovies } from '../Movies/TopMovies';

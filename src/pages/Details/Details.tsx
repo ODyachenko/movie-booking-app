@@ -1,10 +1,10 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/hooks';
+import { MovieTags } from '../../components/MovieTags/MovieTags';
 import { Btn } from '../../UI/Btn/Btn';
 import { ImoviesList } from '../../../@types';
 import './styles.scss';
-import { MovieTags } from '../../components/MovieTags/MovieTags';
-import { useAppSelector } from '../../hooks/hooks';
 
 export const Details: FC = () => {
   const { movies } = useAppSelector((state) => state.movies);

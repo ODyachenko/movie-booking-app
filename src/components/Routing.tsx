@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Booking } from '../pages/Booking';
 import { Details } from '../pages/Details/Details';

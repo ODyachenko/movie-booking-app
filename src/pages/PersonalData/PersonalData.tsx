@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { RegisterForm } from '../../components/Forms/RegisterForm';
 
 export const PersonalData: FC = () => {

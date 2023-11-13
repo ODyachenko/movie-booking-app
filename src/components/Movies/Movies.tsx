@@ -1,7 +1,6 @@
-import React, { FC } from 'react';
-
-import { ImoviesList } from '../../../@types';
+import { FC } from 'react';
 import { MoviesList } from './MoviesList';
+import { ImoviesList } from '../../../@types';
 import './styles.scss';
 
 type MoviesProps = {

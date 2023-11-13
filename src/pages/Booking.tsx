@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { BookingForm } from '../components/BookingForm/BookingForm';
 
 export const Booking: FC = () => {

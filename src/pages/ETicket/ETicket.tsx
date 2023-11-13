@@ -1,7 +1,6 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Ticket } from '../../components/Ticket/Ticket';
-
 import './styles.scss';
 
 export const ETicket: FC = () => {

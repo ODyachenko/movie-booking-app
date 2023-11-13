@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { ImoviesList } from '../../../@types';
-import { MoviesListItem } from './MoviesListItem';
-import 'swiper/css';
 import { useAppSelector } from '../../hooks/hooks';
+import { MoviesListItem } from './MoviesListItem';
 import Skelleton from './Skelleton';
+import { ImoviesList } from '../../../@types';
+import 'swiper/css';
 
 type MoviesListProps = {
   movies: ImoviesList[];
