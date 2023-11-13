@@ -34,6 +34,7 @@ export type SelectFieldOptions = {
 };
 
 export type User = {
+  id?: string;
   fullname: string;
   avatarUrl: string;
   email: string;

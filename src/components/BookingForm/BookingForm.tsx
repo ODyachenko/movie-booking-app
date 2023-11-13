@@ -55,6 +55,15 @@ export const BookingForm: FC = () => {
       name: booking.name,
     };
     dispatch(postBooking({ ...result, navigate }));
+    dispatch(
+      setBooking({
+        cinema: '',
+        date: '',
+        time: '',
+        name: '',
+        seats: [],
+      })
+    );
   };
   const onChangeCinema = (
     event: SingleValue<SelectFieldOptions>,

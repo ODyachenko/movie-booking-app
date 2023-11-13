@@ -1,8 +1,12 @@
 import React, { FC } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Ticket } from '../../components/Ticket/Ticket';
+
 import './styles.scss';
 
 export const ETicket: FC = () => {
+  let [searchParams] = useSearchParams();
+
   return (
     <section className="e-ticket block">
       <div className="container">
@@ -13,7 +17,13 @@ export const ETicket: FC = () => {
           Continue to comply with health protocols.
         </p>
         <div className="e-ticket__list">
-          <Ticket />
+          <Ticket
+            name={searchParams.get('name')}
+            cinema={searchParams.get('cinema')}
+            date={searchParams.get('date')}
+            time={searchParams.get('time')}
+            seats={searchParams.get('seats')}
+          />
         </div>
       </div>
     </section>

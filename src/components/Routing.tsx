@@ -11,6 +11,7 @@ import { PersonalData } from '../pages/PersonalData/PersonalData';
 import { Register } from '../pages/Register';
 import { Settings } from '../pages/Settings/Settings';
 import { YourMovie } from '../pages/YourMovie/YourMovie';
+import { YourTickets } from '../pages/YourTickets/YourTickets';
 import { Nav } from './Nav/Nav';
 
 export const Routing: FC = () => {
@@ -28,6 +29,7 @@ export const Routing: FC = () => {
         <Route path="/e-ticket" element={<ETicket />} />
         <Route path="/paymentInfo" element={<PaymentInfo />} />
         <Route path="/personal-data" element={<PersonalData />} />
+        <Route path="/your-tickets" element={<YourTickets />} />
         <Route path="/not-found" element={<NotFound />} />
       </Routes>
     </Router>

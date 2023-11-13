@@ -1,12 +1,17 @@
 import { useEffect } from 'react';
 import { Routing } from './components/Routing';
 import { useAppDispatch, useAppSelector } from './hooks/hooks';
+import { fetchBookedMovies } from './redux/slices/bookingSlice';
 import { fetchMovies } from './redux/slices/moviesSlice';
 import { setAuthUser, setIsAuth } from './redux/slices/userSlice';
 
 function App() {
-  const { isAuth } = useAppSelector((state) => state.user);
+  const { isAuth, authUser } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchMovies());
+  }, [dispatch]);
 
   useEffect(() => {
     localStorage.getItem(String(process.env.REACT_APP_TOKEN))
@@ -21,6 +26,7 @@ function App() {
       const user = JSON.parse(json);
       dispatch(
         setAuthUser({
+          id: user.user.id,
           email: user.user.email,
           fullname: user.user.user_metadata.fullname,
           avatarUrl: user.user.user_metadata.avatarUrl,
@@ -31,8 +37,8 @@ function App() {
   }, [isAuth, dispatch]);
 
   useEffect(() => {
-    dispatch(fetchMovies());
-  }, [dispatch]);
+    authUser.id && dispatch(fetchBookedMovies(authUser.id));
+  }, [authUser.id, dispatch]);
 
   return <Routing />;
 }

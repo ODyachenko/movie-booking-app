@@ -1,12 +1,18 @@
 import React, { FC } from 'react';
 import Barcode from 'react-barcode';
-import { useSearchParams } from 'react-router-dom';
 import { Margin, Resolution, usePDF } from 'react-to-pdf';
 import { Btn } from '../../UI/Btn/Btn';
 import './styles.scss';
 
-export const Ticket: FC = () => {
-  let [searchParams] = useSearchParams();
+type TicketProps = {
+  name: string | null;
+  cinema: string | null;
+  date: string | null;
+  time: string | null;
+  seats: string | null;
+};
+
+export const Ticket: FC<any> = ({ name, cinema, date, time, seats }) => {
   const { toPDF, targetRef } = usePDF({
     filename: 'ticket.pdf',
     resolution: Resolution.NORMAL,
@@ -17,25 +23,25 @@ export const Ticket: FC = () => {
     <div className="e-ticket__list-item">
       <div ref={targetRef} className="e-ticket__ticket ticket">
         <div className="ticket__header">
-          <h3 className="ticket__movie">Film: {searchParams.get('name')}</h3>
+          <h3 className="ticket__movie">Film: {name}</h3>
           <span className="ticket__label">e-ticket</span>
         </div>
         <div className="ticket__content">
           <div className="ticket__info">
             <span>Date</span>
-            <strong>{searchParams.get('date')}</strong>
+            <strong>{date}</strong>
           </div>
           <div className="ticket__info">
             <span>Seats</span>
-            <strong>{searchParams.get('seats')}</strong>
+            <strong>{seats}</strong>
           </div>
           <div className="ticket__info">
             <span>Location</span>
-            <strong>{searchParams.get('cinema')}</strong>
+            <strong>{cinema}</strong>
           </div>
           <div className="ticket__info">
             <span>Time</span>
-            <strong>{searchParams.get('time')}</strong>
+            <strong>{time}</strong>
           </div>
           <div className="ticket__info">
             <span>Payment</span>

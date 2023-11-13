@@ -182,6 +182,7 @@ export const userSlice = createSlice({
       })
       .addCase(updateUserData.fulfilled, (state) => {
         state.loading = false;
+        // @TODO
         state.isAuth = false;
       })
       .addCase(uploadAvatar.pending, (state) => {

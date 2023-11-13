@@ -7,6 +7,7 @@ import {
   SelectFieldOptions,
   BookingItem,
   BookingType,
+  User,
 } from '../../../@types';
 
 type postBookingType = {
@@ -22,19 +23,23 @@ type postBookingType = {
 export const postBooking = createAsyncThunk<
   undefined,
   postBookingType,
-  { rejectValue: string }
->('booking/postBooking', async function (obj, { rejectWithValue }) {
-  const { error } = await supabase.from('booked movie').insert(obj);
-  const location = {
-    pathname: '/e-ticket',
-    search: `?name=${obj.name}&cinema=${obj.cinema}&date=${obj.date}&time=${obj.time}&seats=${obj.seats}`,
-  };
+  { rejectValue: string; state: any }
+>(
+  'booking/postBooking',
+  async function (obj, { rejectWithValue, getState, dispatch }) {
+    const { error } = await supabase.from('booked movie').insert(obj);
+    const location = {
+      pathname: '/e-ticket',
+      search: `?name=${obj.name}&cinema=${obj.cinema}&date=${obj.date}&time=${obj.time}&seats=${obj.seats}`,
+    };
 
-  if (error) {
-    return rejectWithValue(error.message);
+    if (error) {
+      return rejectWithValue(error.message);
+    }
+    dispatch(fetchBookedMovies(getState().user.authUser.id));
+    obj.navigate(location);
   }
-  obj.navigate(location);
-});
+);
 
 // Fetch Booking Info
 export const fetchBookingInfo = createAsyncThunk<
@@ -75,16 +80,20 @@ export const fetchBookedMovies = createAsyncThunk<
 
 // Delete Booking
 export const deleteBooking = createAsyncThunk<
-  any,
+  undefined,
   number | undefined,
-  { rejectValue: string }
->('booking/deleteBooking', async function (id, { rejectWithValue }) {
-  const { error } = await supabase.from('booked movie').delete().eq('id', id);
+  { rejectValue: string; state: { user: any } }
+>(
+  'booking/deleteBooking',
+  async function (id, { rejectWithValue, getState, dispatch }) {
+    const { error } = await supabase.from('booked movie').delete().eq('id', id);
 
-  if (error) {
-    return rejectWithValue(error.message);
+    if (error) {
+      return rejectWithValue(error.message);
+    }
+    dispatch(fetchBookedMovies(getState().user.authUser.id));
   }
-});
+);
 
 // Define a type for the slice state
 interface bookingState {

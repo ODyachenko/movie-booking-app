@@ -17,8 +17,8 @@ const categoryList = [
   {
     id: 5,
     icon: require('../../assets/img/category5.png'),
-    text: 'Your Ticket',
-    type: 'ticket',
+    text: 'Your Tickets',
+    type: 'tickets',
   },
   {
     id: 3,

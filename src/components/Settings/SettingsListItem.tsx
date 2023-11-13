@@ -25,14 +25,17 @@ export const SettingsListItem: FC<SettingsListItemProps> = ({
       case 'payment':
         navigate('/paymentInfo');
         break;
-      case 'ticket':
-        console.log('ticket');
+      case 'tickets':
+        navigate('/your-tickets');
         break;
       case 'remove':
         console.log('remove');
         break;
       case 'logout':
-        dispatch(logoutUser());
+        // eslint-disable-next-line no-restricted-globals
+        if (confirm('Do you want to log out?')) {
+          dispatch(logoutUser());
+        }
         break;
 
       default:
