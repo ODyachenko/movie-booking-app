@@ -23,7 +23,7 @@ export const Routing: FC = () => {
         <Route
           path="/"
           element={
-            <Suspense fallback={<p>loading...</p>}>
+            <Suspense fallback={<p className="loader">loading...</p>}>
               <Home />
             </Suspense>
           }
@@ -31,7 +31,7 @@ export const Routing: FC = () => {
         <Route
           path="/details/:id"
           element={
-            <Suspense fallback={<p>loading...</p>}>
+            <Suspense fallback={<p className="loader">loading...</p>}>
               <Details />
             </Suspense>
           }
@@ -39,7 +39,7 @@ export const Routing: FC = () => {
         <Route
           path="/booking/:id"
           element={
-            <Suspense fallback={<p>loading...</p>}>
+            <Suspense fallback={<p className="loader">loading...</p>}>
               <Booking />
             </Suspense>
           }
@@ -47,7 +47,7 @@ export const Routing: FC = () => {
         <Route
           path="/register"
           element={
-            <Suspense fallback={<p>loading...</p>}>
+            <Suspense fallback={<p className="loader">loading...</p>}>
               <Register />
             </Suspense>
           }
@@ -55,7 +55,7 @@ export const Routing: FC = () => {
         <Route
           path="/login"
           element={
-            <Suspense fallback={<p>loading...</p>}>
+            <Suspense fallback={<p className="loader">loading...</p>}>
               <Login />
             </Suspense>
           }
@@ -63,7 +63,7 @@ export const Routing: FC = () => {
         <Route
           path="/your-movie"
           element={
-            <Suspense fallback={<p>loading...</p>}>
+            <Suspense fallback={<p className="loader">loading...</p>}>
               <YourMovie />
             </Suspense>
           }
@@ -71,7 +71,7 @@ export const Routing: FC = () => {
         <Route
           path="/settings"
           element={
-            <Suspense fallback={<p>loading...</p>}>
+            <Suspense fallback={<p className="loader">loading...</p>}>
               <Settings />
             </Suspense>
           }
@@ -79,7 +79,7 @@ export const Routing: FC = () => {
         <Route
           path="/e-ticket"
           element={
-            <Suspense fallback={<p>loading...</p>}>
+            <Suspense fallback={<p className="loader">loading...</p>}>
               <ETicket />
             </Suspense>
           }
@@ -87,7 +87,7 @@ export const Routing: FC = () => {
         <Route
           path="/paymentInfo"
           element={
-            <Suspense fallback={<p>loading...</p>}>
+            <Suspense fallback={<p className="loader">loading...</p>}>
               <PaymentInfo />
             </Suspense>
           }
@@ -95,7 +95,7 @@ export const Routing: FC = () => {
         <Route
           path="/personal-data"
           element={
-            <Suspense fallback={<p>loading...</p>}>
+            <Suspense fallback={<p className="loader">loading...</p>}>
               <PersonalData />
             </Suspense>
           }
@@ -103,7 +103,7 @@ export const Routing: FC = () => {
         <Route
           path="/your-tickets"
           element={
-            <Suspense fallback={<p>loading...</p>}>
+            <Suspense fallback={<p className="loader">loading...</p>}>
               <YourTickets />
             </Suspense>
           }
@@ -111,7 +111,7 @@ export const Routing: FC = () => {
         <Route
           path="*"
           element={
-            <Suspense fallback={<p>loading...</p>}>
+            <Suspense fallback={<p className="loader">loading...</p>}>
               <NotFound />
             </Suspense>
           }
