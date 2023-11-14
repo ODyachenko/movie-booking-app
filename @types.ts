@@ -46,7 +46,7 @@ export type BookingType = {
   date?: string;
   time?: string;
   name?: string;
-  seats?: string[];
+  seats?: string[] | string;
 };
 
 export type BookingInfo = {
@@ -83,4 +83,11 @@ export type CategoryList = {
   icon: string;
   text: string;
   type: string;
+};
+
+export type BookingFormData = {
+  cinema: SelectFieldOptions;
+  date: SelectFieldOptions;
+  time: SelectFieldOptions;
+  seats: string[];
 };

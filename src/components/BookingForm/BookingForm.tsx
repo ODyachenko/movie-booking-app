@@ -14,13 +14,12 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { getAvailableDates } from '../../utils/getAvailableDates';
 import { getAvailableTime } from '../../utils/getAvailableTime';
 import { getAvailableSeats } from '../../utils/getAvailableSeats';
-import { SelectFieldOptions } from '../../../@types';
+import { SelectFieldOptions, BookingFormData } from '../../../@types';
 import './styles.scss';
 
-type FormData = {
-  cinema: SelectFieldOptions;
-  date: SelectFieldOptions;
-  time: SelectFieldOptions;
+type AvailableData = {
+  dates: SelectFieldOptions[];
+  time: SelectFieldOptions[];
   seats: string[];
 };
 
@@ -30,14 +29,17 @@ export const BookingForm: FC = () => {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<BookingFormData>();
 
   const { booking, bookingInfo, cinema } = useAppSelector(
     (state) => state.booking
   );
-  const [dates, setDates] = useState<SelectFieldOptions[]>([]);
-  const [time, setTime] = useState<SelectFieldOptions[]>([]);
-  const [seats, setSeats] = useState([]);
+
+  const [availableData, setAvailableData] = useState<AvailableData>({
+    dates: [],
+    time: [],
+    seats: [],
+  });
   const { id } = useParams<string>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -46,7 +48,7 @@ export const BookingForm: FC = () => {
     dispatch(fetchBookingInfo(id));
   }, [id, dispatch]);
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<BookingFormData> = (data) => {
     const result = {
       ...data,
       date: data.date.value,
@@ -71,7 +73,10 @@ export const BookingForm: FC = () => {
   ) => {
     callback(event);
     dispatch(setBooking({ ...booking, cinema: event?.value }));
-    setDates(getAvailableDates(bookingInfo, event));
+    setAvailableData({
+      ...availableData,
+      dates: getAvailableDates(bookingInfo, event),
+    });
   };
   const onChangeDates = (
     event: SingleValue<SelectFieldOptions>,
@@ -79,7 +84,10 @@ export const BookingForm: FC = () => {
   ) => {
     callback(event);
     dispatch(setBooking({ ...booking, date: event?.value }));
-    setTime(getAvailableTime(bookingInfo, event, booking.cinema));
+    setAvailableData({
+      ...availableData,
+      time: getAvailableTime(bookingInfo, event, booking.cinema),
+    });
   };
 
   const onChangeTime = (
@@ -88,9 +96,15 @@ export const BookingForm: FC = () => {
   ) => {
     callback(event);
     dispatch(setBooking({ ...booking, time: event?.value }));
-    setSeats(
-      getAvailableSeats(bookingInfo, event, booking.cinema, booking.date)
-    );
+    setAvailableData({
+      ...availableData,
+      seats: getAvailableSeats(
+        bookingInfo,
+        event,
+        booking.cinema,
+        booking.date
+      ),
+    });
   };
 
   return (
@@ -106,7 +120,7 @@ export const BookingForm: FC = () => {
         />
         {booking.cinema && (
           <SelectField
-            options={dates}
+            options={availableData.dates}
             caption="Date"
             errors={errors}
             control={control}
@@ -115,7 +129,7 @@ export const BookingForm: FC = () => {
         )}
         {booking.date && (
           <SelectField
-            options={time}
+            options={availableData.time}
             caption="Time"
             errors={errors}
             control={control}
@@ -125,7 +139,11 @@ export const BookingForm: FC = () => {
       </div>
 
       {booking.time && (
-        <Seats register={register} errors={errors} availableSeats={seats} />
+        <Seats
+          register={register}
+          errors={errors}
+          availableSeats={availableData.seats}
+        />
       )}
       <Btn
         className="booking__btn"

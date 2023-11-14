@@ -42,6 +42,13 @@ body {
   .movie {
     max-width: 250px;
   }
+  .swiper-slide {
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: scale(1.01) !important;
+    }
+  }
 }
 
 @media (min-width: 1024px) {

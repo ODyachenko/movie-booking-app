@@ -1,5 +1,5 @@
 import { SingleValue } from 'react-select';
-import { BookingInfo, SelectFieldOptions } from '../../@types';
+import { SelectFieldOptions } from '../../@types';
 
 export const getAvailableDates = (
   obj: any,

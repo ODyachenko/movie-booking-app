@@ -7,7 +7,6 @@ import {
   SelectFieldOptions,
   BookingItem,
   BookingType,
-  User,
 } from '../../../@types';
 
 type postBookingType = {
@@ -60,7 +59,7 @@ export const fetchBookingInfo = createAsyncThunk<
 
 // Fetch Booked Movies
 export const fetchBookedMovies = createAsyncThunk<
-  any,
+  BookingType[],
   string | undefined,
   { rejectValue: string }
 >(

@@ -13,6 +13,10 @@ export const useBaseQueries = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    authUser.id && dispatch(fetchBookedMovies(authUser.id));
+  }, [authUser.id, dispatch]);
+
+  useEffect(() => {
     localStorage.getItem(String(process.env.REACT_APP_TOKEN))
       ? dispatch(setIsAuth(true))
       : dispatch(setIsAuth(false));
@@ -34,8 +38,4 @@ export const useBaseQueries = () => {
       return;
     }
   }, [isAuth, dispatch]);
-
-  useEffect(() => {
-    authUser.id && dispatch(fetchBookedMovies(authUser.id));
-  }, [authUser.id, dispatch]);
 };

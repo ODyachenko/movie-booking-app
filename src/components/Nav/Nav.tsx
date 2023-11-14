@@ -1,11 +1,11 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { NavLinks } from './NavLinks';
 import logo from '../../assets/img/logo.png';
 import './styles.scss';
 
 export const Nav: FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const onClickHandler = () => {
     setIsOpen(!isOpen);

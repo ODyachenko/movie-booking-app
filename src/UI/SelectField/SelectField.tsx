@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import Select from 'react-select';
-import { Controller } from 'react-hook-form';
+import { Control, Controller } from 'react-hook-form';
 import { SelectFieldOptions } from '../../../@types';
 import './styles.scss';
 
@@ -8,7 +8,7 @@ type SelectFieldProps = {
   options: SelectFieldOptions[];
   caption: string;
   errors: any;
-  control: any;
+  control: Control<any>;
   onChangeHandler: any;
 };
 

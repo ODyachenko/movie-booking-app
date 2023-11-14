@@ -1,9 +1,11 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { BookingFormData } from '../../../@types';
 import screen from '../../assets/img/screen.svg';
 
 type SeatsProps = {
-  register: any;
-  errors: any;
+  register: UseFormRegister<BookingFormData>;
+  errors: FieldErrors<BookingFormData>;
   availableSeats: string[];
 };
 

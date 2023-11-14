@@ -1,9 +1,13 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/hooks';
 import { Btn } from '../../UI/Btn/Btn';
 
-export const NavLinks: FC<any> = ({ onClickHandler }) => {
+type NavLinksProps = {
+  onClickHandler: () => void;
+};
+
+export const NavLinks: FC<NavLinksProps> = ({ onClickHandler }) => {
   const { isAuth } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
 

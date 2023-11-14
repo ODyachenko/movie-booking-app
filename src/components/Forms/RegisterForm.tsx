@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from 'react';
+import { ChangeEventHandler, FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
@@ -61,7 +61,9 @@ export const RegisterForm: FC<RegisterFormProps> = ({
       : dispatch(updateUserData({ updateFormData, navigate }));
   };
 
-  const handleChangeFile = (event: any) => {
+  const handleChangeFile: ChangeEventHandler<HTMLInputElement | any> = (
+    event
+  ) => {
     const avatarFile = event.target.files[0];
     dispatch(uploadAvatar(avatarFile));
   };

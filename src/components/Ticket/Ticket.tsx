@@ -5,14 +5,20 @@ import { Btn } from '../../UI/Btn/Btn';
 import './styles.scss';
 
 type TicketProps = {
-  name?: string | null;
-  cinema?: string | null;
-  date?: string | null;
-  time?: string | null;
-  seats?: string | null;
+  name?: string | null | undefined;
+  cinema?: string | null | undefined;
+  date?: string | null | undefined;
+  time?: string | null | undefined;
+  seats?: string[] | string | null | undefined;
 };
 
-export const Ticket: FC<any> = ({ name, cinema, date, time, seats }) => {
+export const Ticket: FC<TicketProps> = ({
+  name,
+  cinema,
+  date,
+  time,
+  seats,
+}) => {
   const { toPDF, targetRef } = usePDF({
     filename: 'ticket.pdf',
     resolution: Resolution.NORMAL,

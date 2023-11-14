@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookingType } from '../../../@types';
 import { useAppDispatch } from '../../hooks/hooks';
