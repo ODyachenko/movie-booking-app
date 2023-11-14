@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Ticket } from '../../components/Ticket/Ticket';
 import { useAppSelector } from '../../hooks/hooks';
 
-export const YourTickets: FC = () => {
+const YourTickets: FC = () => {
   const { bookedMovies } = useAppSelector((state) => state.booking);
 
   return (
@@ -22,3 +22,4 @@ export const YourTickets: FC = () => {
     </section>
   );
 };
+export default YourTickets;

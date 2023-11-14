@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { BookedMovies } from '../../components/BookedMovies/BookedMovies';
 import './styles.scss';
 
-export const YourMovie: FC = () => {
+const YourMovie: FC = () => {
   return (
     <section className="booked block">
       <div className="container">
@@ -12,3 +12,4 @@ export const YourMovie: FC = () => {
     </section>
   );
 };
+export default YourMovie;

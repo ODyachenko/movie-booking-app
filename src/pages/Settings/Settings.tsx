@@ -5,7 +5,7 @@ import { User } from '../../components/Settings/User';
 import { useAppSelector } from '../../hooks/hooks';
 import './styles.scss';
 
-export const Settings: FC = () => {
+const Settings: FC = () => {
   const { isAuth } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
 
@@ -23,3 +23,4 @@ export const Settings: FC = () => {
     </section>
   );
 };
+export default Settings;

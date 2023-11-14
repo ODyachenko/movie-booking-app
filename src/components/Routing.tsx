@@ -1,36 +1,121 @@
-import { FC } from 'react';
+import { FC, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Booking } from '../pages/Booking';
-import { Details } from '../pages/Details/Details';
-import { ETicket } from '../pages/ETicket/ETicket';
-import { Home } from '../pages/Home';
-import { Login } from '../pages/Login';
-import { NotFound } from '../pages/NotFound';
-import { PaymentInfo } from '../pages/PaymentInfo/PaymentInfo';
-import { PersonalData } from '../pages/PersonalData/PersonalData';
-import { Register } from '../pages/Register';
-import { Settings } from '../pages/Settings/Settings';
-import { YourMovie } from '../pages/YourMovie/YourMovie';
-import { YourTickets } from '../pages/YourTickets/YourTickets';
 import { Nav } from './Nav/Nav';
+
+const Home = lazy(() => import('../pages/Home'));
+const Login = lazy(() => import('../pages/Login'));
+const Register = lazy(() => import('../pages/Register'));
+const Details = lazy(() => import('../pages/Details/Details'));
+const ETicket = lazy(() => import('../pages/ETicket/ETicket'));
+const PaymentInfo = lazy(() => import('../pages/PaymentInfo/PaymentInfo'));
+const Booking = lazy(() => import('../pages/Booking'));
+const PersonalData = lazy(() => import('../pages/PersonalData/PersonalData'));
+const Settings = lazy(() => import('../pages/Settings/Settings'));
+const YourMovie = lazy(() => import('../pages/YourMovie/YourMovie'));
+const YourTickets = lazy(() => import('../pages/YourTickets/YourTickets'));
+const NotFound = lazy(() => import('../pages/NotFound/NotFound'));
 
 export const Routing: FC = () => {
   return (
     <Router>
       <Nav />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/details/:id" element={<Details />} />
-        <Route path="/booking/:id" element={<Booking />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/your-movie" element={<YourMovie />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/e-ticket" element={<ETicket />} />
-        <Route path="/paymentInfo" element={<PaymentInfo />} />
-        <Route path="/personal-data" element={<PersonalData />} />
-        <Route path="/your-tickets" element={<YourTickets />} />
-        <Route path="/not-found" element={<NotFound />} />
+        <Route
+          path="/"
+          element={
+            <Suspense fallback={<p>loading...</p>}>
+              <Home />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/details/:id"
+          element={
+            <Suspense fallback={<p>loading...</p>}>
+              <Details />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/booking/:id"
+          element={
+            <Suspense fallback={<p>loading...</p>}>
+              <Booking />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <Suspense fallback={<p>loading...</p>}>
+              <Register />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <Suspense fallback={<p>loading...</p>}>
+              <Login />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/your-movie"
+          element={
+            <Suspense fallback={<p>loading...</p>}>
+              <YourMovie />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <Suspense fallback={<p>loading...</p>}>
+              <Settings />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/e-ticket"
+          element={
+            <Suspense fallback={<p>loading...</p>}>
+              <ETicket />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/paymentInfo"
+          element={
+            <Suspense fallback={<p>loading...</p>}>
+              <PaymentInfo />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/personal-data"
+          element={
+            <Suspense fallback={<p>loading...</p>}>
+              <PersonalData />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/your-tickets"
+          element={
+            <Suspense fallback={<p>loading...</p>}>
+              <YourTickets />
+            </Suspense>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <Suspense fallback={<p>loading...</p>}>
+              <NotFound />
+            </Suspense>
+          }
+        />
       </Routes>
     </Router>
   );

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { BookingForm } from '../components/BookingForm/BookingForm';
 
-export const Booking: FC = () => {
+const Booking: FC = () => {
   return (
     <section className="booking block">
       <div className="container">
@@ -10,3 +10,4 @@ export const Booking: FC = () => {
     </section>
   );
 };
+export default Booking;

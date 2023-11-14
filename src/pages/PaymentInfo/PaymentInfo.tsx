@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks/hooks';
 import { PaymentDetails } from './PaymentDetails';
 import './styles.scss';
 
-export const PaymentInfo: FC = () => {
+const PaymentInfo: FC = () => {
   const { authUser } = useAppSelector((state) => state.user);
 
   return (
@@ -19,3 +19,4 @@ export const PaymentInfo: FC = () => {
     </section>
   );
 };
+export default PaymentInfo;

@@ -6,7 +6,7 @@ import { Btn } from '../../UI/Btn/Btn';
 import { ImoviesList } from '../../../@types';
 import './styles.scss';
 
-export const Details: FC = () => {
+const Details: FC = () => {
   const { movies } = useAppSelector((state) => state.movies);
   const { isAuth } = useAppSelector((state) => state.user);
   const [movie, setMovie] = useState<ImoviesList | null>(null);
@@ -58,3 +58,4 @@ export const Details: FC = () => {
     </section>
   );
 };
+export default Details;

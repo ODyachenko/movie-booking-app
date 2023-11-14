@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Main } from '../components/Main/Main';
 
-export const Home: FC = () => {
+const Home: FC = () => {
   return <Main />;
 };
+export default Home;

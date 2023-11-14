@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Ticket } from '../../components/Ticket/Ticket';
 import './styles.scss';
 
-export const ETicket: FC = () => {
+const ETicket: FC = () => {
   let [searchParams] = useSearchParams();
 
   return (
@@ -28,3 +28,4 @@ export const ETicket: FC = () => {
     </section>
   );
 };
+export default ETicket;

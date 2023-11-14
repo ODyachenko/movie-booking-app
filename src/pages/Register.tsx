@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { RegisterForm } from '../components/Forms/RegisterForm';
 import { useCheckIsAuth } from '../hooks/useCheckAuth';
 
-export const Register: FC = () => {
+const Register: FC = () => {
   useCheckIsAuth();
 
   return (
@@ -13,3 +13,4 @@ export const Register: FC = () => {
     </section>
   );
 };
+export default Register;

@@ -10,7 +10,13 @@ export const MoviesListItem: FC<ImoviesList> = ({
 }) => {
   return (
     <Link className="movies__list-item movie" to={`/details/${id}`}>
-      <img className="movie__poster" src={poster} alt={name} />
+      <img
+        className="movie__poster"
+        src={poster}
+        alt={name}
+        width={250}
+        height={370}
+      />
       <h2 className="movie__name">{name}</h2>
       {rating && (
         <span className="movie__rating">

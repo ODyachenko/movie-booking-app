@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { LoginForm } from '../components/Forms/LoginForm';
 
-export const Login: FC = () => {
+const Login: FC = () => {
   return (
     <section className="signin block">
       <div className="container">
@@ -10,3 +10,4 @@ export const Login: FC = () => {
     </section>
   );
 };
+export default Login;
