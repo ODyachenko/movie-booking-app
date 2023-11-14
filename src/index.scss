@@ -1,6 +1,11 @@
 @import './assets/scss/normalize.scss';
 @import './assets/scss/variables.scss';
 
+html {
+  &.hidden {
+    overflow: hidden;
+  }
+}
 body {
   position: relative;
   font-family: 'Poppins', sans-serif;

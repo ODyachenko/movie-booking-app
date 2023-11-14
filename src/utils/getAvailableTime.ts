@@ -2,7 +2,7 @@ import { SingleValue } from 'react-select';
 import { BookingInfo, SelectFieldOptions } from '../../@types';
 
 export const getAvailableTime = (
-  obj: any,
+  obj: BookingInfo | any,
   event: SingleValue<SelectFieldOptions>,
   cinema?: string
 ) => {

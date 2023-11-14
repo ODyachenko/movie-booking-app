@@ -283,7 +283,7 @@ export const Seats: FC<SeatsProps> = ({ register, errors, availableSeats }) => {
       <div className="booking__footer">
         <span className="booking__footer-label">Selected</span>
         <span className="booking__footer-label">Reserved</span>
-        <span className="booking__footer-label">Avialable 250 uah</span>
+        <span className="booking__footer-label">Avialable</span>
       </div>
     </>
   );

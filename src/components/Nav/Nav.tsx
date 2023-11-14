@@ -8,6 +8,7 @@ export const Nav: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const onClickHandler = () => {
+    document.documentElement.classList.toggle('hidden');
     setIsOpen(!isOpen);
   };
 
