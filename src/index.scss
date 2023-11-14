@@ -42,6 +42,14 @@ body {
   max-width: 190px;
 }
 
+@media (min-width: 640px) {
+  html {
+    &.hidden {
+      overflow: visible;
+      overflow-x: hidden;
+    }
+  }
+}
 @media (min-width: 1024px) {
   .swiper-slide,
   .movie {
